@@ -13,47 +13,44 @@ import {
   Sparkles,
 } from 'lucide-react';
 
-const stages = ['directivo', 'gerencial', 'independiente', 'reinvención'] as const;
-const countries = ['Perú', 'Colombia', 'México', 'Brasil'] as const;
+const stages = ['C-Level / Director', 'Gerencia Media', 'Empresario / Dueño', 'Consultor Independiente'] as const;
+const countries = ['Perú', 'Colombia', 'México', 'Brasil', 'Chile', 'Ecuador'] as const;
 
 const stemAreas = [
-  { id: 'IA', name: 'Inteligencia Artificial', icon: '🤖' },
-  { id: 'AN', name: 'Analítica de Datos', icon: '📈' },
-  { id: 'CO', name: 'Herramientas Colaborativas', icon: '🤝' },
-  { id: 'MA', name: 'Marketing Digital', icon: '📱' },
+  { id: 'IA', name: 'Inteligencia Artificial Estratégica', icon: '🧠' },
+  { id: 'AN', name: 'Gobierno de Datos & Analytics', icon: '📊' },
+  { id: 'CO', name: 'Productividad & Ecosistemas Cloud', icon: '☁️' },
+  { id: 'MA', name: 'Marca Personal & Influencia Digital', icon: '✨' },
 ] as const;
 
 const subThemes = {
-  IA: ['ChatGPT & Prompt Engineering', 'Automatización de procesos', 'IA para toma de decisiones', 'Generación de contenido con IA', 'Copilot / Asistentes virtuales', 'Ética en IA'],
-  AN: ['Power BI / Dashboards', 'Análisis de mercados', 'Google Analytics', 'Data Literacy', 'Excel Avanzado / Python', 'Visualización de datos'],
-  CO: ['Notion / Gestión de proyectos', 'Slack / Comunicación moderna', 'Metodologías Ágiles', 'Manejo de la Nube (Cloud)', 'Ciberseguridad básica', 'Ecosistemas Digítales'],
-  MA: ['LinkedIn para ejecutivos', 'Estrategia de marca personal', 'Social Selling', 'Trend Monitoring', 'E-commerce', 'Content Strategy'],
+  IA: ['IA Generativa para Directorios', 'Automatización de Procesos Críticos', 'Ética y Gobernanza en IA', 'Copilot para Ejecutivos', 'Prompt Engineering para Estrategia'],
+  AN: ['Dashboards de Control de Mando', 'Data Literacy para Líderes', 'Visualización Estratégica', 'Cultura Driven-Data', 'Modelos Predictivos de Negocio'],
+  CO: ['Arquitecturas de Trabajo Híbrido', 'Gestión de Proyectos en la Nube', 'Ciberseguridad para Directivos', 'Agilidad Escalada', 'Herramientas de Co-creación'],
+  MA: ['LinkedIn para Líderes de Opinión', 'Social Selling para Ejecutivos', 'Estrategia de Contenido Digital', 'Networking de Alto Nivel', 'Reputación Online'],
 };
 
 const objectives = [
-  'Optimizar mi productividad con tecnología',
-  'Liderar equipos digitales con confianza',
-  'Actualizar mis competencias de mercado',
-  'Emprender un negocio digital/consultoría',
-  'Superar la brecha tecnológica',
+  'Modernizar mi visión de negocio con IA',
+  'Liderar la transformación digital de mi equipo',
+  'Asegurar mi relevancia en el mercado actual',
+  'Optimizar mi productividad estratégica',
+  'Entender el lenguaje de las nuevas generaciones',
 ] as const;
 
 const supportTypes = [
-  'Hoja de ruta personalizada',
-  'Entrenamiento en herramientas específicas',
-  'Acompañamiento en proyectos reales',
-  'Optimización de LinkedIn/Marca Personal',
-  'Diagnóstico de brecha digital',
-  'Consultoría en IA aplicada',
-  'Networking de alto nivel',
-  'Liderazgo en entornos digitales',
+  'Mentoría personalizada 1 a 1',
+  'Casos de estudio aplicados a mi industria',
+  'Configuración de herramientas en vivo',
+  'Análisis de tendencias tecnológicas',
+  'Acompañamiento en la toma de decisiones tech',
 ] as const;
 
 const scheduleOptions = [
-  { id: 'morning', label: 'Mañanas (6:00 – 12:00)' },
-  { id: 'afternoon', label: 'Tardes (12:00 – 18:00)' },
-  { id: 'night', label: 'Noches (18:00 – 22:00)' },
-  { id: 'weekend', label: 'Fines de semana' },
+  { id: 'morning', label: 'Mañanas (Inicios de jornada)' },
+  { id: 'midday', label: 'Almuerzos Ejecutivos (12:00 - 14:00)' },
+  { id: 'afternoon', label: 'Tardes (Cierre de agenda)' },
+  { id: 'weekend', label: 'Sábados de Capacitación' },
 ];
 
 const MenteeOnboardingPage: React.FC = () => {
@@ -72,9 +69,8 @@ const MenteeOnboardingPage: React.FC = () => {
   const [selectedSubThemes, setSelectedSubThemes] = useState<string[]>([]);
   const [objective, setObjective] = useState('');
   const [selectedSupport, setSelectedSupport] = useState<string[]>([]);
-  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
   
-  const [level, setLevel] = useState('');
+  const [learningStyle, setLearningStyle] = useState('');
   const [selectedSchedules, setSelectedSchedules] = useState<string[]>([]);
 
   const handleNext = () => {
@@ -107,18 +103,18 @@ const MenteeOnboardingPage: React.FC = () => {
   const canProceed = () => {
     switch (step) {
       case 1: return age && city && country && stage;
-      case 2: return stemArea && selectedSubThemes.length > 0 && objective && selectedSupport.length > 0;
-      case 3: return level;
+      case 2: return stemArea && selectedSubThemes.length > 0 && objective;
+      case 3: return learningStyle;
       case 4: return selectedSchedules.length > 0;
       default: return false;
     }
   };
 
   const stepTitles = [
-    'Perfil',
-    'Estrategia',
-    'Nivel',
-    'Preferencias'
+    'Trayectoria',
+    'Brecha Digital',
+    'Metodología',
+    'Calendario'
   ];
 
   return (
@@ -167,26 +163,26 @@ const MenteeOnboardingPage: React.FC = () => {
                 <div className="space-y-10">
                   <div>
                     <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4 tracking-tight leading-tight">
-                      Tu Perfil Ejecutivo.
+                      Tu Legado Estratégico.
                     </h2>
                     <p className="text-lg text-muted-foreground font-medium">
-                      Iniciemos personalizando tu experiencia según tu trayectoria de liderazgo.
+                      Personalicemos tu camino hacia el liderazgo digital moderno.
                     </p>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Edad</Label>
+                      <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Años de Trayectoria</Label>
                       <Input
                         type="number"
-                        placeholder="Ej: 55"
+                        placeholder="Ej: 54"
                         value={age}
                         onChange={(e) => setAge(e.target.value)}
                         className="h-14 rounded-xl bg-background border-2 text-lg font-bold px-6 focus:border-primary transition-all"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Ciudad</Label>
+                       <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Ciudad / Ciudad de Operación</Label>
                       <Input
                         placeholder="Ej: Lima, Perú"
                         value={city}
@@ -197,8 +193,8 @@ const MenteeOnboardingPage: React.FC = () => {
                   </div>
 
                   <div className="space-y-4">
-                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">País</Label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Región Principal</Label>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                       {countries.map((c) => (
                         <button
                           key={c}
@@ -215,7 +211,7 @@ const MenteeOnboardingPage: React.FC = () => {
                   </div>
 
                   <div className="space-y-4">
-                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Nivel de Responsabilidad</Label>
+                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Nivel de Responsabilidad Actual</Label>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {stages.map((s) => (
                         <button
@@ -227,10 +223,10 @@ const MenteeOnboardingPage: React.FC = () => {
                           )}
                         >
                           <p className={cn("text-lg font-bold transition-colors", stage === s ? "text-primary" : "text-foreground")}>
-                            {s.charAt(0).toUpperCase() + s.slice(1)}
+                            {s}
                           </p>
                           <p className="text-sm text-muted-foreground font-medium mt-1">
-                            {s === 'reinvención' ? 'Buscando nuevas oportunidades o modelos de negocio.' : `Experiencia en nivel ${s} corporativo.`}
+                            Enfoque en decisiones {s.includes('Director') ? 'de alto nivel y visión' : 'operativas y estratégicas'}.
                           </p>
                         </button>
                       ))}
@@ -243,27 +239,30 @@ const MenteeOnboardingPage: React.FC = () => {
                 <div className="space-y-10">
                   <div>
                     <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4 tracking-tight leading-tight">
-                      Objetivos Digitales.
+                      Desafíos Digitales.
                     </h2>
                     <p className="text-lg text-muted-foreground font-medium">
-                      Selecciona las áreas tecnológicas que deseas dominar.
+                      ¿En qué área sientes que la tecnología puede potenciar tu visión?
                     </p>
                   </div>
 
                   <div className="space-y-4">
-                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Área Principal</Label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Frontera Tecnológica</Label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {stemAreas.map((area) => (
                         <button
                           key={area.id}
                           onClick={() => { setStemArea(area.id); setSelectedSubThemes([]); }}
                           className={cn(
-                            "p-6 rounded-2xl border-2 flex flex-col items-center gap-3 transition-all",
-                            stemArea === area.id ? "bg-primary text-primary-foreground border-primary shadow-md" : "bg-background border-border hover:border-primary/20"
+                            "p-6 rounded-2xl border-2 flex items-center gap-6 transition-all",
+                            stemArea === area.id ? "bg-primary/10 border-primary shadow-md" : "bg-background border-border hover:border-primary/20"
                           )}
                         >
-                          <span className="text-3xl">{area.icon}</span>
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-center">{area.name}</span>
+                          <span className="text-4xl">{area.icon}</span>
+                          <div className="text-left">
+                             <span className="text-sm font-bold block">{area.name}</span>
+                             <span className="text-[10px] text-muted-foreground uppercase tracking-widest">Optimización & Estrategia</span>
+                          </div>
                         </button>
                       ))}
                     </div>
@@ -271,7 +270,7 @@ const MenteeOnboardingPage: React.FC = () => {
 
                   {stemArea && (
                     <div className="space-y-4 animate-fade-in">
-                      <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Temas de Interés (Máx. 3)</Label>
+                      <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Enfoques de Interés (Sugeridos por IA)</Label>
                       <div className="flex flex-wrap gap-2">
                         {subThemes[stemArea as keyof typeof subThemes].map((theme) => (
                           <button
@@ -290,7 +289,7 @@ const MenteeOnboardingPage: React.FC = () => {
                   )}
 
                   <div className="space-y-4">
-                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Meta Principal</Label>
+                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Meta de Transformación</Label>
                     <div className="space-y-2">
                       {objectives.map((o) => (
                         <button
@@ -298,28 +297,10 @@ const MenteeOnboardingPage: React.FC = () => {
                           onClick={() => setObjective(o)}
                           className={cn(
                             "w-full p-4 rounded-xl border-2 text-left font-bold text-sm transition-all",
-                            objective === o ? "bg-primary/5 border-primary" : "bg-background border-border hover:border-primary/20"
+                            objective === o ? "bg-primary text-white border-primary" : "bg-background border-border hover:border-primary/20"
                           )}
                         >
                           {o}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Tipo de Acompañamiento</Label>
-                    <div className="flex flex-wrap gap-2">
-                      {supportTypes.slice(0, 6).map((s) => (
-                        <button
-                          key={s}
-                          onClick={() => toggleSelection(s, selectedSupport, setSelectedSupport, 3)}
-                          className={cn(
-                            "px-4 py-2 rounded-lg border font-bold text-[10px] uppercase tracking-widest transition-all",
-                            selectedSupport.includes(s) ? "bg-primary text-white border-primary" : "bg-background border-border"
-                          )}
-                        >
-                          {s}
                         </button>
                       ))}
                     </div>
@@ -331,31 +312,35 @@ const MenteeOnboardingPage: React.FC = () => {
                 <div className="space-y-10">
                   <div>
                     <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4 tracking-tight leading-tight">
-                      Nivel de Experiencia.
+                      Estilo de Mentoría.
                     </h2>
                     <p className="text-lg text-muted-foreground font-medium">
-                      Esto nos ayudará a encontrar el ritmo ideal para tus sesiones.
+                      Buscamos el ritmo ideal para tu estilo de liderazgo.
                     </p>
                   </div>
 
                   <div className="grid gap-4">
-                    {['Principiante', 'Intermedio', 'Avanzado'].map((l) => (
+                    {[
+                      { id: 'hands-on', title: 'Práctico & Inmersivo', desc: 'Aprender haciendo, configurando herramientas en tiempo real.' },
+                      { id: 'strategic', title: 'Visión Estratégica', desc: 'Entender el "por qué" y el impacto en el negocio antes que el "cómo".' },
+                      { id: 'case-study', title: 'Basado en Casos', desc: 'Analizar cómo otras empresas líderes están aplicando estas tecnologías.' }
+                    ].map((l) => (
                       <button
-                        key={l}
-                        onClick={() => setLevel(l)}
+                        key={l.id}
+                        onClick={() => setLearningStyle(l.id)}
                         className={cn(
                           "p-8 rounded-[2rem] border-2 text-left transition-all flex items-center justify-between group",
-                          level === l ? "bg-primary/5 border-primary shadow-sm" : "bg-background border-border hover:border-primary/20"
+                          learningStyle === l.id ? "bg-primary/5 border-primary shadow-sm" : "bg-background border-border hover:border-primary/20"
                         )}
                       >
                         <div>
-                           <p className={cn("text-2xl font-bold transition-colors", level === l ? "text-primary" : "text-foreground")}>{l}</p>
+                           <p className={cn("text-2xl font-bold transition-colors", learningStyle === l.id ? "text-primary" : "text-foreground")}>{l.title}</p>
                            <p className="text-sm text-muted-foreground font-medium mt-1">
-                              {l === 'Principiante' ? 'Sin experiencia previa con estas herramientas.' : l === 'Intermedio' ? 'Uso ocasional, necesito mayor fluidez.' : 'Tengo bases sólidas, busco perfeccionamiento.'}
+                              {l.desc}
                            </p>
                         </div>
-                        <div className={cn("h-6 w-6 rounded-full border-2 flex items-center justify-center transition-all", level === l ? "border-primary bg-primary" : "border-border")}>
-                           {level === l && <CheckCircle className="h-4 w-4 text-white" />}
+                        <div className={cn("h-6 w-6 rounded-full border-2 flex items-center justify-center transition-all", learningStyle === l.id ? "border-primary bg-primary" : "border-border")}>
+                           {learningStyle === l.id && <CheckCircle className="h-4 w-4 text-white" />}
                         </div>
                       </button>
                     ))}
@@ -367,24 +352,16 @@ const MenteeOnboardingPage: React.FC = () => {
                 <div className="space-y-10">
                   <div>
                     <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4 tracking-tight leading-tight">
-                      Preferencias de Sesión.
+                      Disponibilidad Ejecutiva.
                     </h2>
                     <p className="text-lg text-muted-foreground font-medium">
-                      Define tu disponibilidad para las mentorías digitales.
+                      Aseguremos bloques de tiempo sin interrupciones.
                     </p>
                   </div>
 
                   <div className="space-y-8">
-                    <div className="bg-secondary/5 p-8 rounded-2xl border border-border">
-                       <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-4">Idioma</h4>
-                       <div className="flex items-center gap-4">
-                          <div className="h-10 w-10 rounded-lg bg-primary text-white flex items-center justify-center font-bold">ES</div>
-                          <span className="text-lg font-bold">Español</span>
-                       </div>
-                    </div>
-
                     <div className="space-y-4">
-                      <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Disponibilidad sugerida</Label>
+                      <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Ventanas Horarias Preferidas</Label>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {scheduleOptions.map((opt) => (
                            <button
@@ -402,13 +379,13 @@ const MenteeOnboardingPage: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="p-8 bg-primary rounded-2xl text-primary-foreground flex items-center gap-6 shadow-lg">
-                       <div className="h-12 w-12 bg-white/10 rounded-xl flex items-center justify-center shrink-0 border border-white/20">
-                          <Sparkles className="h-6 w-6" />
+                    <div className="p-8 bg-primary rounded-[2rem] text-primary-foreground flex flex-col md:flex-row items-center gap-8 shadow-xl relative overflow-hidden">
+                       <div className="h-16 w-16 bg-white/10 rounded-2xl flex items-center justify-center shrink-0 border border-white/20">
+                          <CheckCircle className="h-8 w-8" />
                        </div>
                        <div>
-                          <p className="text-lg font-bold">¡Todo listo para comenzar!</p>
-                          <p className="text-sm opacity-80 font-medium text-pretty">Estamos preparando las mejores recomendaciones de coaches para tu perfil.</p>
+                          <p className="text-xl font-bold">Protocolo de Confidencialidad</p>
+                          <p className="text-sm opacity-80 font-medium">Todas tus sesiones están protegidas. Tu coach firmará un acuerdo de no divulgación automático.</p>
                        </div>
                     </div>
                   </div>
@@ -432,7 +409,7 @@ const MenteeOnboardingPage: React.FC = () => {
                 disabled={!canProceed()}
                 className="h-12 px-10 rounded-xl font-bold uppercase tracking-widest text-[10px] bg-primary text-primary-foreground shadow-md hover:bg-primary/90 transition-all w-full sm:w-auto active:scale-95"
               >
-                {step === totalSteps ? 'Finalizar Registro' : 'Siguiente'}
+                {step === totalSteps ? 'Activar Plan de Evolución' : 'Continuar'}
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </div>

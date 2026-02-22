@@ -54,7 +54,7 @@ const RegisterPage: React.FC = () => {
                 Únete a SilverHub
               </h1>
               <p className="text-muted-foreground">
-                Crea tu cuenta y comienza tu camino en STEM
+                Crea tu cuenta y comienza tu camino en el Coaching Digital
               </p>
             </div>
 
@@ -62,51 +62,51 @@ const RegisterPage: React.FC = () => {
             <div className="grid grid-cols-2 gap-4 mb-6">
               <button
                 type="button"
-                onClick={() => setRole('mentee')}
+                onClick={() => setRole('mentora')}
                 className={cn(
-                  'p-4 rounded-xl border-2 transition-all text-left',
-                  role === 'mentee'
-                    ? 'border-primary bg-primary/5'
-                    : 'border-border hover:border-primary/50'
+                  'p-4 rounded-xl border-2 transition-all text-left flex flex-col',
+                  role === 'mentora'
+                    ? 'border-accent bg-accent/5'
+                    : 'border-border hover:border-accent/50'
                 )}
               >
                 <User className={cn(
                   'h-6 w-6 mb-2',
-                  role === 'mentee' ? 'text-primary' : 'text-muted-foreground'
+                  role === 'mentora' ? 'text-accent' : 'text-muted-foreground'
                 )} />
                 <p className={cn(
-                  'font-medium',
-                  role === 'mentee' ? 'text-primary' : 'text-foreground'
+                  'font-bold text-sm leading-tight',
+                  role === 'mentora' ? 'text-accent' : 'text-foreground'
                 )}>
-                  Soy Mentee
+                  Soy mentor joven
                 </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Busco orientación STEM
+                <p className="text-[10px] text-muted-foreground mt-2 leading-relaxed">
+                  Quiero enseñar mis habilidades digitales a senior.
                 </p>
               </button>
 
               <button
                 type="button"
-                onClick={() => setRole('mentora')}
+                onClick={() => setRole('mentee')}
                 className={cn(
-                  'p-4 rounded-xl border-2 transition-all text-left',
-                  role === 'mentora'
+                  'p-4 rounded-xl border-2 transition-all text-left flex flex-col',
+                  role === 'mentee'
                     ? 'border-primary bg-primary/5'
                     : 'border-border hover:border-primary/50'
                 )}
               >
                 <GraduationCap className={cn(
                   'h-6 w-6 mb-2',
-                  role === 'mentora' ? 'text-primary' : 'text-muted-foreground'
+                  role === 'mentee' ? 'text-primary' : 'text-muted-foreground'
                 )} />
                 <p className={cn(
-                  'font-medium',
-                  role === 'mentora' ? 'text-primary' : 'text-foreground'
+                  'font-bold text-sm leading-tight',
+                  role === 'mentee' ? 'text-primary' : 'text-foreground'
                 )}>
-                  Soy Mentora
+                  Soy líder senior
                 </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Quiero guiar Seniors
+                <p className="text-[10px] text-muted-foreground mt-2 leading-relaxed">
+                  Quiero modernizar mi visión estratégica con tecnología.
                 </p>
               </button>
             </div>
