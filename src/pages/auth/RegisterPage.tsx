@@ -78,7 +78,7 @@ const RegisterPage: React.FC = () => {
                   'font-bold text-sm leading-tight',
                   role === 'mentora' ? 'text-accent' : 'text-foreground'
                 )}>
-                  Soy mentor joven
+                  Quiero ser coach digital
                 </p>
                 <p className="text-[10px] text-muted-foreground mt-2 leading-relaxed">
                   Quiero enseñar mis habilidades digitales a senior.
