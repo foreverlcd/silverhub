@@ -57,7 +57,7 @@ const MentoraDashboardPage: React.FC = () => {
   }, []);
 
   const sessionsThisMonth = upcomingSessions.length + completedSessions.length;
-  const payoutSoles = (completedSessions.length * 149 * 0.6).toFixed(0);
+  const payoutSoles = (completedSessions.length * 59 * 0.6).toFixed(0);
   const activeMentees = new Set(
     [...upcomingSessions, ...completedSessions].map((s) => s.menteeId || s.menteeName || 'mentee')
   ).size;

@@ -241,7 +241,7 @@ const BookingPage: React.FC = () => {
                             <span className="font-bold text-muted-foreground uppercase tracking-widest text-[10px]">Inversión</span>
                             <div className="flex items-baseline gap-1">
                                <span className="text-xs font-bold text-muted-foreground">S/</span>
-                               <span className="text-2xl font-bold tracking-tight">149</span>
+                               <span className="text-2xl font-bold tracking-tight">59</span>
                             </div>
                          </div>
                          <div className="flex justify-between items-center">
