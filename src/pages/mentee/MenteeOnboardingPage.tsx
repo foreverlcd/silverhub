@@ -1,0 +1,455 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Navbar } from '@/components/Navbar';
+import { useAuth } from '@/contexts/AuthContext';
+import { cn } from '@/lib/utils';
+import {
+  ArrowRight,
+  ArrowLeft,
+  CheckCircle,
+  User,
+  Target,
+  Heart,
+  Sparkles,
+} from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+
+const stages = ['directivo', 'gerencial', 'independiente', 'reinvención'] as const;
+const countries = ['Perú', 'Colombia', 'México', 'Brasil'] as const;
+
+const stemAreas = [
+  { id: 'IA', name: 'Inteligencia Artificial', icon: '🤖' },
+  { id: 'AN', name: 'Analítica de Datos', icon: '📈' },
+  { id: 'CO', name: 'Herramientas Colaborativas', icon: '🤝' },
+  { id: 'MA', name: 'Marketing Digital', icon: '📱' },
+] as const;
+
+const subThemes = {
+  IA: ['ChatGPT & Prompt Engineering', 'Automatización de procesos', 'IA para toma de decisiones', 'Generación de contenido con IA', 'Copilot / Asistentes virtuales', 'Ética en IA'],
+  AN: ['Power BI / Dashboards', 'Análisis de mercados', 'Google Analytics', 'Data Literacy', 'Excel Avanzado / Python', 'Visualización de datos'],
+  CO: ['Notion / Gestión de proyectos', 'Slack / Comunicación moderna', 'Metodologías Ágiles', 'Manejo de la Nube (Cloud)', 'Ciberseguridad básica', 'Ecosistemas Digítales'],
+  MA: ['LinkedIn para ejecutivos', 'Estrategia de marca personal', 'Social Selling', 'Trend Monitoring', 'E-commerce', 'Content Strategy'],
+};
+
+const objectives = [
+  'Optimizar mi productividad con tecnología',
+  'Liderar equipos digitales con confianza',
+  'Actualizar mis competencias de mercado',
+  'Emprender un negocio digital/consultoría',
+  'Superar la brecha tecnológica',
+] as const;
+
+const supportTypes = [
+  'Hoja de ruta personalizada',
+  'Entrenamiento en herramientas específicas',
+  'Acompañamiento en proyectos reales',
+  'Optimización de LinkedIn/Marca Personal',
+  'Diagnóstico de brecha digital',
+  'Consultoría en IA aplicada',
+  'Networking de alto nivel',
+  'Liderazgo en entornos digitales',
+] as const;
+
+const industries = [
+  'Tech/SaaS', 'Educación', 'Salud', 'Fintech', 'Energía', 'Manufactura', 'Investigación', 'Gobierno/ONG', 'Startups', 'Otro'
+] as const;
+
+const scheduleOptions = [
+  { id: 'morning', label: 'Mañanas (6:00 – 12:00)' },
+  { id: 'afternoon', label: 'Tardes (12:00 – 18:00)' },
+  { id: 'night', label: 'Noches (18:00 – 22:00)' },
+  { id: 'weekend', label: 'Fines de semana' },
+];
+
+const MenteeOnboardingPage: React.FC = () => {
+  const navigate = useNavigate();
+  const { completeOnboarding } = useAuth();
+  const [step, setStep] = useState(1);
+  const totalSteps = 4;
+
+  // Form state
+  const [age, setAge] = useState('');
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
+  const [stage, setStage] = useState<typeof stages[number] | ''>('');
+  
+  const [stemArea, setStemArea] = useState<typeof stemAreas[number]['id'] | ''>('');
+  const [selectedSubThemes, setSelectedSubThemes] = useState<string[]>([]);
+  const [objective, setObjective] = useState('');
+  const [selectedSupport, setSelectedSupport] = useState<string[]>([]);
+  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
+  
+  const [level, setLevel] = useState('');
+  const [preferredLanguage, setPreferredLanguage] = useState('Español');
+  const [selectedSchedules, setSelectedSchedules] = useState<string[]>([]);
+
+  const handleNext = () => {
+    if (step < totalSteps) {
+      setStep(step + 1);
+    } else {
+      handleComplete();
+    }
+  };
+
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
+
+  const handleComplete = () => {
+    completeOnboarding();
+    navigate('/mentee/dashboard');
+  };
+
+  const toggleSelection = (item: string, list: string[], setList: (val: string[]) => void, max: number) => {
+    if (list.includes(item)) {
+      setList(list.filter(i => i !== item));
+    } else if (list.length < max) {
+      setList([...list, item]);
+    }
+  };
+
+  const canProceed = () => {
+    switch (step) {
+      case 1: return age && city && country && stage;
+      case 2: return stemArea && selectedSubThemes.length > 0 && objective && selectedSupport.length > 0 && selectedIndustries.length > 0;
+      case 3: return level;
+      case 4: return selectedSchedules.length > 0;
+      default: return false;
+    }
+  };
+
+  const stepTitles = [
+    'Perfil Ejecutivo',
+    'Estrategia Digital',
+    'Diagnóstico',
+    'Preferencia Coach'
+  ];
+
+  return (
+    <div className="min-h-screen bg-background bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-fixed flex flex-col">
+      <Navbar />
+      
+      <div className="flex-1 flex items-center justify-center pt-24 pb-12 px-4">
+        <div className="w-full max-w-4xl">
+          
+          {/* Executive Progress Header */}
+          <div className="mb-12">
+            <div className="flex justify-between items-center mb-6">
+               {stepTitles.map((title, i) => (
+                 <div key={i} className="flex flex-col items-center gap-2 group">
+                   <div className={cn(
+                     "w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-lg",
+                     step > i + 1 ? "bg-success text-success-foreground scale-90" : 
+                     step === i + 1 ? "bg-primary text-primary-foreground scale-110 shadow-primary/30 rotate-3" : 
+                     "bg-secondary/50 text-muted-foreground"
+                   )}>
+                     {step > i + 1 ? <CheckCircle className="h-6 w-6" /> : <span className="font-black text-lg">{i + 1}</span>}
+                   </div>
+                   <span className={cn(
+                     "text-[10px] font-black uppercase tracking-[0.2em] hidden md:block transition-colors",
+                     step === i + 1 ? "text-primary" : "text-muted-foreground/50"
+                   )}>{title}</span>
+                 </div>
+               ))}
+            </div>
+            <div className="h-1 w-full bg-secondary/30 rounded-full overflow-hidden">
+               <div 
+                 className="h-full bg-primary transition-all duration-700 ease-out" 
+                 style={{ width: `${(step / totalSteps) * 100}%` }}
+               />
+            </div>
+          </div>
+
+          {/* Main Card */}
+          <div className="glass rounded-[3rem] border-white/20 p-10 md:p-16 shadow-2xl relative overflow-hidden animate-scale-in">
+            <div className="absolute top-0 right-0 p-12 opacity-[0.02] pointer-events-none">
+              <Sparkles className="w-64 h-64" />
+            </div>
+
+            <div className="relative z-10 transition-all duration-500">
+              {step === 1 && (
+                <div className="space-y-10 animate-fade-in">
+                  <div>
+                    <h2 className="text-3xl md:text-5xl font-black text-foreground mb-4 font-display italic tracking-tight">
+                      Tu Trayectoria es el Cimiento.
+                    </h2>
+                    <p className="text-xl text-muted-foreground font-medium">
+                      Iniciemos personalizando tu experiencia según tu perfil de liderazgo.
+                    </p>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <Label className="font-black uppercase tracking-widest text-xs opacity-60">Edad</Label>
+                      <Input
+                        type="number"
+                        placeholder="Ej: 55"
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                        className="h-16 rounded-2xl bg-background/50 border-2 text-xl font-bold px-6 focus:border-primary transition-all"
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="font-black uppercase tracking-widest text-xs opacity-60">Ciudad de Residencia</Label>
+                      <Input
+                        placeholder="Ej: Miraflores, Lima"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        className="h-16 rounded-2xl bg-background/50 border-2 text-xl font-bold px-6 focus:border-primary transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <Label className="font-black uppercase tracking-widest text-xs opacity-60">País</Label>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      {countries.map((c) => (
+                        <button
+                          key={c}
+                          onClick={() => setCountry(c)}
+                          className={cn(
+                            "h-14 rounded-xl border-2 font-black transition-all flex items-center justify-center tracking-widest uppercase text-xs",
+                            country === c ? "bg-primary text-primary-foreground border-primary shadow-lg scale-105" : "bg-background/30 border-border/50 hover:border-primary/50 text-muted-foreground"
+                          )}
+                        >
+                          {c}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <Label className="font-black uppercase tracking-widest text-xs opacity-60">Estatus Ejecutivo</Label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {stages.map((s) => (
+                        <button
+                          key={s}
+                          onClick={() => setStage(s)}
+                          className={cn(
+                            "p-6 rounded-2xl border-2 text-left transition-all group",
+                            stage === s ? "bg-primary/5 border-primary shadow-inner" : "bg-background/30 border-border/50 hover:border-primary/30"
+                          )}
+                        >
+                          <p className={cn("text-lg font-black font-display italic transition-colors", stage === s ? "text-primary" : "text-foreground")}>
+                            {s.charAt(0).toUpperCase() + s.slice(1)}
+                          </p>
+                          <p className="text-sm text-muted-foreground font-medium mt-1">
+                            {s === 'reinvención' ? 'Buscando nuevas verticales de consultoría o negocio.' : `Liderazgo en nivel ${s} corporativo.`}
+                          </p>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {step === 2 && (
+                <div className="space-y-10 animate-fade-in">
+                  <div>
+                    <h2 className="text-3xl md:text-5xl font-black text-foreground mb-4 font-display italic tracking-tight">
+                      Estrategia de Transformación.
+                    </h2>
+                    <p className="text-xl text-muted-foreground font-medium">
+                      Selecciona las palancas tecnológicas que potenciarán tu carrera.
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    <Label className="font-black uppercase tracking-widest text-xs opacity-60">Área de Poder Digital</Label>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      {stemAreas.map((area) => (
+                        <button
+                          key={area.id}
+                          onClick={() => { setStemArea(area.id); setSelectedSubThemes([]); }}
+                          className={cn(
+                            "p-6 rounded-3xl border-2 flex flex-col items-center gap-4 transition-all group",
+                            stemArea === area.id ? "bg-primary text-primary-foreground border-primary shadow-xl scale-105" : "bg-background/30 border-border/50 hover:border-primary/20"
+                          )}
+                        >
+                          <span className="text-4xl group-hover:scale-110 transition-transform">{area.icon}</span>
+                          <span className="text-[10px] font-black uppercase tracking-widest text-center">{area.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {stemArea && (
+                    <div className="space-y-4 animate-slide-up">
+                      <Label className="font-black uppercase tracking-widest text-xs opacity-60">Temas Específicos (Máx. 3)</Label>
+                      <div className="flex flex-wrap gap-2">
+                        {subThemes[stemArea as keyof typeof subThemes].map((theme) => (
+                          <button
+                            key={theme}
+                            onClick={() => toggleSelection(theme, selectedSubThemes, setSelectedSubThemes, 3)}
+                            className={cn(
+                              "px-6 py-3 rounded-full border-2 font-bold text-sm transition-all",
+                              selectedSubThemes.includes(theme) ? "bg-accent text-accent-foreground border-accent shadow-lg" : "bg-background/50 border-border/50 hover:border-accent/40"
+                            )}
+                          >
+                            {theme}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="space-y-4">
+                    <Label className="font-black uppercase tracking-widest text-xs opacity-60">Objetivo de Impacto</Label>
+                    <div className="space-y-3">
+                      {objectives.map((o) => (
+                        <button
+                          key={o}
+                          onClick={() => setObjective(o)}
+                          className={cn(
+                            "w-full p-5 rounded-2xl border-2 text-left font-bold transition-all",
+                            objective === o ? "bg-primary/5 border-primary" : "bg-background/30 border-border/50 hover:border-primary/30"
+                          )}
+                        >
+                          {o}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <Label className="font-black uppercase tracking-widest text-xs opacity-60">Nivel de Soporte</Label>
+                    <div className="flex flex-wrap gap-2">
+                      {supportTypes.slice(0, 6).map((s) => (
+                        <button
+                          key={s}
+                          onClick={() => toggleSelection(s, selectedSupport, setSelectedSupport, 3)}
+                          className={cn(
+                            "px-5 py-2.5 rounded-xl border font-bold text-xs uppercase tracking-widest transition-all",
+                            selectedSupport.includes(s) ? "bg-primary text-white border-primary" : "bg-background/30 border-border/50"
+                          )}
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {step === 3 && (
+                <div className="space-y-10 animate-fade-in">
+                  <div>
+                    <h2 className="text-3xl md:text-5xl font-black text-foreground mb-4 font-display italic tracking-tight">
+                      Diagnóstico de Partida.
+                    </h2>
+                    <p className="text-xl text-muted-foreground font-medium">
+                      Sé honesto con tu dominio actual para encontrar al Coach que mejor se adapte.
+                    </p>
+                  </div>
+
+                  <div className="grid gap-6">
+                    {['Principiante', 'Intermedio', 'Avanzado'].map((l) => (
+                      <button
+                        key={l}
+                        onClick={() => setLevel(l)}
+                        className={cn(
+                          "p-8 rounded-[2rem] border-2 text-left transition-all flex items-center justify-between group",
+                          level === l ? "bg-primary/5 border-primary shadow-inner" : "bg-background/30 border-border/50 hover:border-primary/20"
+                        )}
+                      >
+                        <div>
+                           <p className={cn("text-2xl font-black font-display italic", level === l ? "text-primary" : "text-foreground")}>{l}</p>
+                           <p className="text-muted-foreground font-medium mt-1">
+                              {l === 'Principiante' ? 'Sin experiencia previa con estas herramientas.' : l === 'Intermedio' ? 'Uso ocasional, necesito fluidez estratégica.' : 'Tengo bases sólidas, busco maestría avanzada.'}
+                           </p>
+                        </div>
+                        <div className={cn("h-8 w-8 rounded-full border-4 flex items-center justify-center transition-all", level === l ? "border-primary bg-primary" : "border-border")}>
+                           {level === l && <CheckCircle className="h-4 w-4 text-white" />}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {step === 4 && (
+                <div className="space-y-10 animate-fade-in">
+                  <div>
+                    <h2 className="text-3xl md:text-5xl font-black text-foreground mb-4 font-display italic tracking-tight">
+                      Sincronización Final.
+                    </h2>
+                    <p className="text-xl text-muted-foreground font-medium">
+                      Define cuándo y cómo quieres recibir tu Coaching Digital.
+                    </p>
+                  </div>
+
+                  <div className="space-y-8">
+                    <div className="bg-secondary/20 p-8 rounded-3xl border border-border/50">
+                       <h4 className="text-xs font-black uppercase tracking-widest text-muted-foreground mb-4">Idioma del Coaching</h4>
+                       <div className="flex items-center gap-4">
+                          <div className="h-12 w-12 rounded-xl bg-primary text-white flex items-center justify-center font-black">ES</div>
+                          <span className="text-xl font-bold">Castellano (Predeterminado)</span>
+                       </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <Label className="font-black uppercase tracking-widest text-xs opacity-60">Disponibilidad Ejecutiva</Label>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {scheduleOptions.map((opt) => (
+                           <button
+                             key={opt.id}
+                             onClick={() => toggleSelection(opt.id, selectedSchedules, setSelectedSchedules, 2)}
+                             className={cn(
+                               "h-20 px-8 rounded-2xl border-2 flex items-center justify-between font-bold text-lg transition-all",
+                               selectedSchedules.includes(opt.id) ? "bg-primary text-white border-primary shadow-xl" : "bg-background/30 border-border/50 hover:border-primary/30"
+                             )}
+                           >
+                              {opt.label}
+                              {selectedSchedules.includes(opt.id) && <CheckCircle className="h-6 w-6" />}
+                           </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="p-8 bg-gradient-primary rounded-[2rem] text-primary-foreground flex items-center gap-8 shadow-2xl">
+                       <div className="h-16 w-16 bg-primary-foreground/20 rounded-2xl flex items-center justify-center shrink-0">
+                          <Sparkles className="h-8 w-8" />
+                       </div>
+                       <div>
+                          <p className="text-lg font-black italic font-display">¡Listo para la Transformación!</p>
+                          <p className="text-sm opacity-80 font-medium">Nuestro motor de IA está procesando tu perfil para las mejores recomendaciones.</p>
+                       </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Navigation Buttons */}
+            <div className="mt-16 pt-10 border-t border-border/50 flex flex-col sm:flex-row gap-4 items-center justify-between relative z-10">
+              <Button
+                variant="outline"
+                onClick={handleBack}
+                disabled={step === 1}
+                className="h-14 px-10 rounded-2xl font-black uppercase tracking-widest text-xs border-2 hover:bg-secondary/50 transition-all w-full sm:w-auto"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Atrás
+              </Button>
+              <Button
+                onClick={handleNext}
+                disabled={!canProceed()}
+                className="h-14 px-12 rounded-2xl font-black uppercase tracking-widest text-xs bg-primary text-primary-foreground shadow-xl hover:shadow-primary/30 transition-all w-full sm:w-auto active:scale-95"
+              >
+                {step === totalSteps ? 'Finalizar Perfil' : 'Siguiente Paso'}
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MenteeOnboardingPage;

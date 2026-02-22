@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* SilverHub - Mentoría Inversa 2026 */
+/* Paleta: Periwinkle (#B9C7F8), Zaffre (#0D21A5), Citron (#D1D067), Blanco, Negro, Gris suave */
+
+@layer base {
+  :root {
+    --background: 226 85% 98%; /* Very light Periwinkle background */
+    --foreground: 232 85% 15%; /* Deep Zaffre for text */
+    --card: 0 0% 100%;
+    --card-foreground: 232 85% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 232 85% 15%;
+    --primary: 232 85% 35%; /* Zaffre */
+    --primary-foreground: 226 85% 98%;
+    --secondary: 226 85% 85%; /* Periwinkle */
+    --secondary-foreground: 232 85% 20%;
+    --muted: 226 30% 92%;
+    --muted-foreground: 232 20% 40%;
+    --accent: 59 52% 61%; /* Citron */
+    --accent-foreground: 232 85% 15%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 210 40% 98%;
+    --warning: 59 52% 61%; /* Citron as warning too? Or keep Citron as Accent */
+    --warning-foreground: 232 85% 15%;
+    --match-high: 142 71% 45%;
+    --match-medium: 59 52% 61%;
+    --match-low: 226 20% 70%;
+    --border: 232 40% 90%;
+    --input: 232 40% 90%;
+    --ring: 232 85% 35%;
+    --radius: 1.5rem;
+    --gradient-primary: linear-gradient(135deg, hsl(232 85% 35%) 0%, hsl(232 85% 20%) 100%);
+    --gradient-hero: radial-gradient(circle at top right, hsl(226 85% 95%), hsl(226 85% 99%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(226 85% 96%));
+    --gradient-accent: linear-gradient(135deg, hsl(59 52% 61%), hsl(59 52% 50%));
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    --shadow-md: 0 10px 20px -5px rgba(13, 33, 165, 0.08); /* Zaffre tinted shadow */
+    --shadow-lg: 0 20px 40px -10px rgba(13, 33, 165, 0.12);
+    --shadow-xl: 0 30px 60px -15px rgba(13, 33, 165, 0.15);
+    --shadow-glow: 0 0 30px -5px hsla(232, 85%, 35%, 0.15);
+  }
+  .dark {
+    --background: 232 85% 5%; /* Very deep Zaffre background */
+    --foreground: 226 85% 95%; /* Light Periwinkle for text */
+    --card: 232 85% 8%;
+    --card-foreground: 226 85% 95%;
+    --popover: 232 85% 8%;
+    --popover-foreground: 226 85% 95%;
+    --primary: 226 85% 85%; /* Periwinkle as primary in dark mode for Better contrast */
+    --primary-foreground: 232 85% 5%;
+    --secondary: 232 85% 15%;
+    --secondary-foreground: 226 85% 95%;
+    --muted: 232 85% 12%;
+    --muted-foreground: 226 30% 70%;
+    --accent: 59 52% 61%; /* Citron remains accent */
+    --accent-foreground: 232 85% 5%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 210 40% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 232 85% 5%;
+    --warning: 59 52% 61%;
+    --warning-foreground: 232 85% 5%;
+    --match-high: 142 71% 45%;
+    --match-medium: 59 52% 61%;
+    --match-low: 232 30% 30%;
+    --border: 232 85% 15%;
+    --input: 232 85% 15%;
+    --ring: 226 85% 85%;
+    --gradient-primary: linear-gradient(135deg, hsl(226 85% 85%), hsl(226 85% 70%));
+    --gradient-hero: radial-gradient(circle at top right, hsl(232 85% 10%), hsl(232 85% 4%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(232 85% 10%), hsl(232 85% 6%));
+    --gradient-accent: linear-gradient(135deg, hsl(59 52% 61%), hsl(59 52% 50%));
+    --shadow-glow: 0 0 30px -10px hsla(226, 85%, 85%, 0.2);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .font-display {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+  .bg-gradient-card {
+    background: var(--gradient-card);
+  }
+  .bg-gradient-accent {
+    background: var(--gradient-accent);
+  }
+  .shadow-card {
+    box-shadow: var(--shadow-md);
+  }
+  .shadow-card-hover {
+    box-shadow: var(--shadow-lg);
+  }
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  .glass {
+    @apply bg-card/80 backdrop-blur-lg border border-border/50;
+  }
+  .match-badge-high {
+    @apply bg-success/10 text-success border border-success/20;
+  }
+  .match-badge-medium {
+    @apply bg-warning/10 text-warning border border-warning/20;
+  }
+  .match-badge-low {
+    @apply bg-muted text-muted-foreground border border-border;
+  }
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-primary;
+  }
+  .animated-underline {
+    @apply relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full;
+  }
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  .dashboard-card {
+    @apply bg-card rounded-xl border border-border p-6 shadow-card transition-all duration-200;
+  }
+  .stat-card {
+    @apply dashboard-card flex flex-col gap-2;
+  }
+  .nav-active {
+    @apply text-primary font-bold;
+  }
+  .input-focus {
+    @apply focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200;
+  }
+}
+
+@layer utilities {
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animate-fade-in { animation: fade-in 0.5s ease-out forwards; }
+  .animate-slide-up { animation: slide-up 0.6s ease-out forwards; }
+  .animate-scale-in { animation: scale-in 0.4s ease-out forwards; }
+  .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+  .animate-float { animation: float 3s ease-in-out infinite; }
+  .animate-float-slow { animation: float 5s ease-in-out infinite; }
+  .animate-marquee { animation: marquee 30s linear infinite; }
+}
+
+/* Animaciones clave */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px -5px hsl(225 74% 85% / 0.3); }
+  50% { box-shadow: 0 0 30px -5px hsl(225 74% 85% / 0.5); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.glass-dark {
+  @apply bg-black/40 backdrop-blur-xl border border-white/10;
+}
