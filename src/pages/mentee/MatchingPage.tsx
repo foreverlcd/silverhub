@@ -207,8 +207,8 @@ const MatchingPage: React.FC = () => {
                             </div>
                         )}
                     </div>
+                </div>
             </main>
-
             <Footer/>
         </div>
 );
