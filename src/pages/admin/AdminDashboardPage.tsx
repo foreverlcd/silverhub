@@ -19,7 +19,7 @@ const AdminDashboardPage: React.FC = () => {
         <div className="section-container">
           <div className="mb-8">
             <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Panel de Administración</h1>
-            <p className="text-muted-foreground">Métricas y gestión de la plataforma Mujeres Digitales.</p>
+            <p className="text-muted-foreground">Métricas y gestión de la plataforma SilverHub.</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

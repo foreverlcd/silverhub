@@ -76,7 +76,7 @@ const MentoraDashboardPage: React.FC = () => {
                  Coaching Hub
               </div>
               <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-4 tracking-tight leading-tight">
-                Bienvenida, <span className="text-primary">{user?.name || 'Coach Digital'}.</span>
+                Bienvenido(a), <span className="text-primary">{user?.name || 'Coach Digital'}.</span>
               </h1>
               <p className="text-xl text-muted-foreground font-medium max-w-2xl leading-relaxed">
                 Tu capacidad para proyectar visión tecnológica en mentes estratégicas está redefiniendo el liderazgo corporativo.
@@ -215,7 +215,7 @@ const MentoraDashboardPage: React.FC = () => {
                          <Sparkles className="h-7 w-7" />
                       </div>
                       <h3 className="text-2xl font-bold mb-4 leading-tight">Crecimiento del Perfil</h3>
-                      <p className="text-base font-medium opacity-80 mb-8 leading-relaxed">Tu perfil ha escalado un <span className="font-bold">83%</span> en el algoritmo. Los líderes buscan expertos en <span className="text-accent-foreground font-bold">IA Corporativa</span>.</p>
+                      <p className="text-base font-medium opacity-80 mb-8 leading-relaxed">Tu perfil ha escalado un <span className="font-bold">83%</span> en el algoritmo. Los líderes buscan expertos en <span className="text-secondary font-bold">IA Corporativa</span>.</p>
                       <Button className="w-full bg-white text-primary hover:bg-white/90 rounded-xl h-14 font-bold uppercase tracking-widest text-xs shadow-md group/btn">
                          Optimizar Mi Perfil <ArrowRight className="h-4 w-4 ml-3 group-hover:translate-x-1 transition-transform" />
                       </Button>

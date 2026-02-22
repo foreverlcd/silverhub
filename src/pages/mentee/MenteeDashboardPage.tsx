@@ -71,7 +71,7 @@ const MenteeDashboardPage: React.FC = () => {
                 Panel de Transformación Digital
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight leading-tight">
-                Bienvenido, {user?.name || 'Líder Senior'}
+                Bienvenido(a), {user?.name || 'Líder Senior'}
               </h1>
               <p className="text-xl text-muted-foreground font-medium max-w-xl">
                 Tu hoja de ruta estratégica está activa. Hemos optimizado tus próximos pasos con IA.

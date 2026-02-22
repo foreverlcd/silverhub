@@ -46,12 +46,12 @@ const RegisterPage: React.FC = () => {
           <div className="bg-card rounded-2xl border border-border p-8 shadow-lg animate-scale-in">
             <div className="text-center mb-8">
               <img 
-                src="/mujeresdigitales.jpg" 
+                src="/LogoSILVERHUB.png"
                 alt="Logo" 
                 className="h-12 w-12 rounded-xl object-cover mx-auto mb-4 shadow-md"
               />
               <h1 className="text-2xl font-bold text-foreground mb-2">
-                Únete a Mujeres Digitales
+                Únete a SilverHub
               </h1>
               <p className="text-muted-foreground">
                 Crea tu cuenta y comienza tu camino en STEM
@@ -106,7 +106,7 @@ const RegisterPage: React.FC = () => {
                   Soy Mentora
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Quiero guiar mujeres
+                  Quiero guiar Seniors
                 </p>
               </button>
             </div>

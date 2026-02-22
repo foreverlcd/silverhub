@@ -46,12 +46,12 @@ const LoginPage: React.FC = () => {
           <div className="bg-card rounded-2xl border border-border p-8 shadow-lg animate-scale-in">
             <div className="text-center mb-8">
               <img 
-                src="/mujeresdigitales.jpg" 
+                src="/LogoSILVERHUB.png"
                 alt="Logo" 
                 className="h-12 w-12 rounded-xl object-cover mx-auto mb-4 shadow-md"
               />
               <h1 className="text-2xl font-bold text-foreground mb-2">
-                Bienvenida de vuelta
+                Bienvenido(a) de vuelta
               </h1>
               <p className="text-muted-foreground">
                 Ingresa a tu cuenta para continuar

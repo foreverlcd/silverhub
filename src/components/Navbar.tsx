@@ -43,16 +43,16 @@ export const Navbar: React.FC = () => {
         <div className="glass rounded-[1.5rem] px-8 h-16 md:h-20 flex items-center justify-between shadow-lg border-white/20 backdrop-blur-3xl bg-white/60 dark:bg-black/40">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group transition-all duration-500 hover:scale-105 active:scale-95">
-            <div className="h-10 w-10 bg-primary/10 rounded-xl flex items-center justify-center p-1.5 border border-primary/20 group-hover:rotate-3 transition-transform">
-              <img 
+            <div className="h-10 w-10 bg-primary dark:bg-[hsl(232_85%_35%)] rounded-xl flex items-center justify-center p-1.5 border border-primary/20 group-hover:rotate-3 transition-transform">
+              <img
                 src="/LogoSILVERHUB-transparent.png"
-                alt="Logo" 
+                alt="Logo"
                 className="h-full w-full object-contain"
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-foreground text-xl tracking-tight leading-none">
-                SILVER<span className="text-primary">HUB</span>
+              <span className="font-bold text-foreground text-xl tracking-tight leading-none bg-p">
+                <span className="text-accent">Silver</span><span className="text-secondary dark:text-blue-600">Hub</span>
               </span>
               <span className="text-[10px] font-medium text-muted-foreground">Mentoría Inversa</span>
             </div>
