@@ -1,7 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { MapPin, Star, Sparkles, CheckCircle, ArrowRight } from 'lucide-react';
-import { MatchScoreBadge } from './MatchScoreBadge';
 import { Button } from './ui/button';
 
 interface MentorCardProps {
@@ -26,7 +25,6 @@ interface MentorCardProps {
 export const MentorCard: React.FC<MentorCardProps> = ({
   name,
   title,
-  company,
   location,
   imageUrl,
   skills,
@@ -42,102 +40,99 @@ export const MentorCard: React.FC<MentorCardProps> = ({
   return (
     <div
       className={cn(
-        'group relative glass rounded-[3.5rem] p-10 flex flex-col transition-all duration-700 hover:shadow-[0_40px_80px_-20px_rgba(var(--primary-rgb),0.25)] hover:-translate-y-4 border-white/20 overflow-hidden',
-        isRecommended && 'ring-2 ring-accent/30 bg-accent/5 shadow-[0_0_40px_rgba(var(--accent-rgb),0.1)]',
+        'group relative bg-card rounded-[2.5rem] p-8 flex flex-col transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border border-border overflow-hidden',
+        isRecommended && 'ring-2 ring-primary/20 bg-primary/5 shadow-lg',
         className
       )}
     >
-      <div className="absolute top-0 right-0 p-16 opacity-[0.02] pointer-events-none group-hover:scale-150 transition-transform duration-[1.5s]">
-         <Sparkles className="w-64 h-64" />
+      <div className="absolute top-0 right-0 p-12 opacity-[0.02] pointer-events-none group-hover:scale-150 transition-transform duration-[1500ms]">
+         <Sparkles className="w-48 h-48" />
       </div>
 
       {isRecommended && (
-        <div className="absolute -top-1 left-12 z-20 flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-accent to-citron text-white text-[10px] font-black uppercase tracking-[0.3em] rounded-b-[1.5rem] shadow-2xl animate-pulse-glow">
-          <Sparkles className="h-4 w-4 fill-white" />
-          Elite IA Match
+        <div className="absolute -top-1 left-10 z-20 flex items-center gap-2 px-6 py-2 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider rounded-b-xl shadow-lg">
+          <Sparkles className="h-3 w-3 fill-current" />
+          Recomendado por IA
         </div>
       )}
 
       {matchScore && (
-        <div className="absolute top-10 right-10 z-10 scale-110">
-          <div className="bg-success text-success-foreground text-[10px] font-black px-5 py-2 rounded-full shadow-2xl border-4 border-background/20 backdrop-blur-xl animate-scale-in">
-            {matchScore}% SCORE
+        <div className="absolute top-8 right-8 z-10">
+          <div className="bg-success text-success-foreground text-[10px] font-bold px-4 py-1.5 rounded-full shadow-md border-2 border-background/20 backdrop-blur-md">
+            {matchScore}% MATCH
           </div>
         </div>
       )}
 
-      <div className="flex flex-col gap-10 mb-10 relative z-10">
+      <div className="flex flex-col gap-6 mb-8 relative z-10">
         <div className="relative w-max self-center md:self-start">
-          <div className="relative group/avatar">
+          <div className="relative">
             <img
               src={imageUrl}
               alt={name}
-              className="h-32 w-32 rounded-[3.5rem] object-cover shadow-2xl border-4 border-background group-hover/avatar:scale-105 transition-transform duration-700"
+              className="h-28 w-28 rounded-3xl object-cover shadow-lg border-2 border-background"
             />
-            <div className="absolute -inset-4 bg-primary/20 rounded-[4rem] -z-10 blur-2xl opacity-0 group-hover/avatar:opacity-100 transition-opacity" />
           </div>
-          <div className="absolute -bottom-2 -right-2 h-12 w-12 bg-success border-4 border-background rounded-2xl flex items-center justify-center shadow-2xl transform group-hover:rotate-12 transition-transform">
-            <CheckCircle className="h-6 w-6 text-success-foreground" />
+          <div className="absolute -bottom-1 -right-1 h-10 w-10 bg-success border-4 border-background rounded-xl flex items-center justify-center shadow-lg">
+            <CheckCircle className="h-5 w-5 text-success-foreground" />
           </div>
         </div>
 
-        <div className="space-y-4 text-center md:text-left">
-          <h3 className="font-black text-foreground text-4xl font-display italic tracking-tight group-hover:text-primary transition-colors duration-500 uppercase leading-none">{name}</h3>
-          <p className="text-sm font-black text-primary uppercase tracking-[0.3em] italic opacity-80 decoration-accent decoration-2 underline-offset-8 underline">{title}</p>
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-8 mt-6 text-[10px] font-black uppercase tracking-widest text-muted-foreground italic">
-            <div className="flex items-center gap-3">
-              <MapPin className="h-4 w-4 text-accent" />
+        <div className="space-y-2 text-center md:text-left">
+          <h3 className="font-bold text-foreground text-2xl tracking-tight group-hover:text-primary transition-colors duration-300 leading-tight">{name}</h3>
+          <p className="text-sm font-semibold text-primary uppercase tracking-wide opacity-90">{title}</p>
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-4 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-primary" />
               <span>{location}</span>
             </div>
-            <div className="flex items-center gap-3">
-              <Star className="h-4 w-4 fill-accent text-accent animate-pulse-glow" />
+            <div className="flex items-center gap-2">
+              <Star className="h-4 w-4 fill-primary text-primary" />
               <span className="text-foreground">{rating.toFixed(1)} <span className="text-muted-foreground opacity-50">/ 5.0</span></span>
             </div>
           </div>
         </div>
       </div>
 
-      <p className="text-muted-foreground leading-relaxed mb-10 line-clamp-3 min-h-[5rem] text-lg font-medium italic opacity-80 relative">
-        <span className="text-4xl text-primary/20 font-black absolute -top-4 -left-4">"</span>
-        {bio || 'Expertiz en transformación digital y liderazgo estratégico, conectando el legado senior con el futuro tecnológico.'}
-        <span className="text-4xl text-primary/20 font-black absolute -bottom-8 right-0 rotate-180">"</span>
+      <p className="text-muted-foreground leading-relaxed mb-8 line-clamp-3 min-h-[4.5rem] text-base font-medium opacity-80">
+        {bio || 'Experto en transformación digital y liderazgo estratégico, conectando el legado senior con el futuro tecnológico.'}
       </p>
 
-      <div className="flex flex-wrap gap-3 mb-12 relative z-10 items-center justify-center md:justify-start">
+      <div className="flex flex-wrap gap-2 mb-10 relative z-10 items-center justify-center md:justify-start">
         {skills.slice(0, 3).map((skill) => (
           <span
             key={skill}
-            className="px-6 py-2.5 bg-secondary/10 text-secondary-foreground text-[9px] font-black uppercase tracking-[0.2em] rounded-2xl border border-white/5 backdrop-blur-sm shadow-sm hover:bg-secondary/20 transition-all cursor-default"
+            className="px-4 py-1.5 bg-secondary/10 text-secondary-foreground text-[10px] font-bold uppercase tracking-wider rounded-lg border border-border/50"
           >
             {skill}
           </span>
         ))}
         {skills.length > 3 && (
-          <span className="text-[10px] font-black text-muted-foreground opacity-40 ml-2">+{skills.length - 3}</span>
+          <span className="text-[10px] font-bold text-muted-foreground opacity-40 ml-1">+{skills.length - 3}</span>
         )}
       </div>
 
-      <div className="mt-auto pt-10 border-t border-border/10 flex flex-col sm:flex-row items-center justify-between gap-8 relative z-10">
+      <div className="mt-auto pt-8 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
         <div className="flex flex-col items-center sm:items-start">
           <div className="flex items-baseline gap-1">
-             <span className="text-xl font-black text-muted-foreground self-start mt-2 mr-1">S/</span>
-             <span className="text-5xl font-black text-foreground tracking-tighter italic font-display">{pricePerSession}</span>
+             <span className="text-sm font-bold text-muted-foreground">S/</span>
+             <span className="text-4xl font-bold text-foreground tracking-tight">{pricePerSession}</span>
           </div>
-          <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] mt-1 opacity-50">Sesión Elite</span>
+          <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1 opacity-50">Por Sesión</span>
         </div>
-        <div className="flex gap-4 w-full sm:w-auto">
+        <div className="flex gap-3 w-full sm:w-auto">
           <Button 
             variant="ghost" 
-            className="h-16 flex-1 sm:flex-none px-8 font-black uppercase tracking-widest text-[10px] rounded-[2rem] hover:bg-secondary/50 transition-all border border-transparent hover:border-secondary" 
+            className="h-12 flex-1 sm:flex-none px-6 font-bold uppercase tracking-widest text-[10px] rounded-xl hover:bg-secondary/50 border border-transparent hover:border-secondary transition-all" 
             onClick={onViewProfile}
           >
             PERFIL
           </Button>
           <Button 
-            className="h-20 flex-1 sm:flex-none px-12 font-black uppercase tracking-[0.2em] text-[11px] rounded-[2rem] shadow-2xl bg-primary text-primary-foreground hover:shadow-primary/40 transition-all active:scale-95 group/btn" 
+            className="h-14 flex-1 sm:flex-none px-8 font-bold uppercase tracking-wider text-[11px] rounded-xl shadow-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all active:scale-95" 
             onClick={onBook}
           >
-            RESERVAR <ArrowRight className="h-4 w-4 ml-4 group-hover:translate-x-2 transition-transform" />
+            RESERVAR <ArrowRight className="h-3 w-3 ml-3" />
           </Button>
         </div>
       </div>

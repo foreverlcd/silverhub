@@ -24,26 +24,26 @@ export const StatCard: React.FC<StatCardProps> = ({
 }) => {
   return (
     <div className={cn(
-      'glass rounded-[2rem] p-8 border-white/10 shadow-xl group hover:scale-[1.02] transition-all duration-500 relative overflow-hidden',
+      'bg-card rounded-2xl p-6 border border-border shadow-md group hover:shadow-lg transition-all duration-300 relative overflow-hidden',
       className
     )}>
       {/* Background Icon Detail */}
       {Icon && (
-        <div className="absolute -top-4 -right-4 p-8 opacity-[0.03] group-hover:scale-110 transition-transform duration-700">
-          <Icon className="w-24 h-24" />
+        <div className="absolute -top-2 -right-2 p-6 opacity-[0.02] group-hover:scale-110 transition-transform duration-500">
+          <Icon className="w-20 h-20" />
         </div>
       )}
 
       <div className="relative z-10">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-4">
           {Icon && (
-            <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
-              <Icon className="h-6 w-6" />
+            <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+              <Icon className="h-5 w-5" />
             </div>
           )}
           {trend && (
             <div className={cn(
-              "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border",
+              "px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border",
               trend.isPositive ? "bg-success/10 text-success border-success/20" : "bg-destructive/10 text-destructive border-destructive/20"
             )}>
               {trend.isPositive ? '↑' : '↓'} {trend.value}%
@@ -52,10 +52,10 @@ export const StatCard: React.FC<StatCardProps> = ({
         </div>
         
         <div className="space-y-1">
-          <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] mb-2">{title}</p>
-          <h3 className="text-4xl font-black text-foreground font-display tracking-tight leading-none italic">{value}</h3>
+          <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1">{title}</p>
+          <h3 className="text-3xl font-bold text-foreground tracking-tight leading-none">{value}</h3>
           {subtitle && (
-            <p className="text-xs text-muted-foreground mt-3 font-medium italic opacity-70">{subtitle}</p>
+            <p className="text-xs text-muted-foreground mt-2 font-medium opacity-60">{subtitle}</p>
           )}
         </div>
       </div>

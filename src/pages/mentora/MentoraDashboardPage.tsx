@@ -4,8 +4,6 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { StatCard } from '@/components/StatCard';
 import { Button } from '@/components/ui/button';
-import { mentoras } from '@/data/mockData';
-import type { CoachDigital } from '@/data/mockData';
 import { useAuth } from '@/contexts/AuthContext';
 import { 
   Calendar, 
@@ -65,19 +63,19 @@ const MentoraDashboardPage: React.FC = () => {
   ).size;
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-all duration-700 selection:bg-primary/20 flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
       <main className="pt-28 pb-20">
         <div className="section-container">
-          {/* Executive Header */}
+          {/* Header */}
           <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
             <div className="animate-slide-up">
-              <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-primary/10 rounded-full text-primary text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-primary/20">
+              <div className="inline-flex items-center gap-3 px-5 py-2 bg-primary/10 rounded-full text-primary text-[10px] font-bold uppercase tracking-widest mb-6 border border-primary/20">
                  <Sparkles className="h-3 w-3" />
-                 Elite Coaching Hub
+                 Coaching Hub
               </div>
-              <h1 className="text-5xl md:text-7xl font-black text-foreground mb-4 font-display italic tracking-tight leading-[0.95]">
+              <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-4 tracking-tight leading-tight">
                 Bienvenida, <span className="text-primary">{user?.name || 'Coach Digital'}.</span>
               </h1>
               <p className="text-xl text-muted-foreground font-medium max-w-2xl leading-relaxed">
@@ -86,73 +84,73 @@ const MentoraDashboardPage: React.FC = () => {
             </div>
             
             <div className="flex gap-4 animate-fade-in animation-delay-200">
-               <Button size="lg" className="h-20 px-10 rounded-[2rem] bg-primary text-primary-foreground font-black uppercase tracking-widest text-xs shadow-2xl hover:shadow-primary/40 active:scale-95 transition-all" onClick={() => navigate('/availability')}>
+               <Button size="lg" className="h-16 px-10 rounded-xl bg-primary text-primary-foreground font-bold uppercase tracking-widest text-xs shadow-lg hover:shadow-primary/40 active:scale-95 transition-all" onClick={() => navigate('/availability')}>
                   Ajustar Agenda
                </Button>
             </div>
           </div>
 
-          {/* Luxury Stat Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          {/* Stat Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
              {[
                { icon: Calendar, label: 'Sincronizaciones Mes', value: sessionsThisMonth, color: 'primary' },
                { icon: DollarSign, label: 'Ingresos Netos', value: `S/ ${payoutSoles}`, color: 'success' },
-               { icon: Star, label: 'Rating Elite', value: '4.98', color: 'accent' },
+               { icon: Star, label: 'Rating Promedio', value: '4.98', color: 'accent' },
                { icon: Users, label: 'Líderes Impactados', value: activeMentees, color: 'primary' }
              ].map((stat, i) => (
-               <div key={i} className="glass rounded-[3rem] p-10 border-white/20 shadow-2xl group hover:scale-[1.05] transition-all duration-500 relative overflow-hidden">
-                  <div className={cn("absolute -top-4 -right-4 p-8 opacity-[0.03] group-hover:scale-125 transition-transform", `text-${stat.color}`)}>
+               <div key={i} className="bg-card rounded-[2rem] p-8 border border-border shadow-md group hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                  <div className={cn("absolute -top-4 -right-4 p-8 opacity-[0.02] group-hover:scale-125 transition-transform", `text-${stat.color}`)}>
                      <stat.icon className="w-24 h-24" />
                   </div>
-                  <div className={cn("h-14 w-14 rounded-2xl flex items-center justify-center mb-8 shadow-inner", 
+                  <div className={cn("h-12 w-12 rounded-2xl flex items-center justify-center mb-6 shadow-sm", 
                     stat.color === 'primary' ? 'bg-primary/10 text-primary' : 
                     stat.color === 'success' ? 'bg-success/10 text-success' : 
                     'bg-accent/10 text-accent')}>
-                     <stat.icon className="h-7 w-7" />
+                     <stat.icon className="h-6 w-6" />
                   </div>
-                  <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] mb-2">{stat.label}</p>
-                  <p className="text-4xl font-black text-foreground font-display tracking-tight">{stat.value}</p>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1">{stat.label}</p>
+                  <p className="text-3xl font-bold text-foreground tracking-tight">{stat.value}</p>
                </div>
              ))}
           </div>
 
-          <div className="grid lg:grid-cols-12 gap-12">
+          <div className="grid lg:grid-cols-12 gap-10">
             {/* Primary Schedule Content */}
             <div className="lg:col-span-8 space-y-12">
               <section className="animate-slide-up animation-delay-300">
-                <div className="flex items-center justify-between mb-10">
+                <div className="flex items-center justify-between mb-8">
                   <div>
-                    <h2 className="text-3xl font-black text-foreground font-display italic tracking-tight">Próximos Desafíos</h2>
-                    <p className="text-sm text-muted-foreground font-medium italic mt-1">Líderes Senior esperando tu guía estratégica.</p>
+                    <h2 className="text-2xl font-bold text-foreground tracking-tight">Próximos Desafíos</h2>
+                    <p className="text-sm text-muted-foreground font-medium mt-1">Líderes Senior esperando tu guía estratégica.</p>
                   </div>
-                  <Button variant="ghost" className="text-primary font-black uppercase text-[10px] tracking-widest hover:bg-primary/5 rounded-2xl h-12 px-6">Ver Calendario Full</Button>
+                  <Button variant="ghost" className="text-primary font-bold uppercase text-[10px] tracking-widest hover:bg-primary/5 h-10 px-4">Ver Calendario Full</Button>
                 </div>
                 
                 {upcomingSessions.length > 0 ? (
-                  <div className="grid gap-6">
+                  <div className="grid gap-4">
                     {upcomingSessions.map((s, i) => (
-                      <div key={s.id} className="glass rounded-[3rem] p-10 border-white/20 flex flex-col md:flex-row md:items-center justify-between gap-8 group hover:border-primary/40 transition-all duration-500 shadow-xl opacity-0 animate-fade-in" style={{ animationDelay: `${i * 150}ms`, animationFillMode: 'forwards' }}>
-                        <div className="flex items-center gap-8">
-                           <div className="h-20 w-20 rounded-[2rem] bg-gradient-to-br from-primary/20 to-secondary/10 flex items-center justify-center text-3xl font-black text-primary/40 shadow-inner group-hover:rotate-3 transition-transform">
+                      <div key={s.id} className="bg-card rounded-[2rem] p-8 border border-border flex flex-col md:flex-row md:items-center justify-between gap-6 group hover:border-primary/40 transition-all duration-300 shadow-sm opacity-0 animate-fade-in" style={{ animationDelay: `${i * 100}ms`, animationFillMode: 'forwards' }}>
+                        <div className="flex items-center gap-6">
+                           <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center text-2xl font-bold text-primary shadow-inner">
                               {s.menteeName?.charAt(0) || 'L'}
                            </div>
                            <div>
-                              <p className="text-2xl font-black text-foreground font-display italic tracking-tight mb-2">{s.menteeName || 'Líder Senior'}</p>
-                              <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
-                                 <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-xl border border-white/10 text-[10px] font-black uppercase tracking-widest text-primary">
+                              <p className="text-xl font-bold text-foreground mb-1">{s.menteeName || 'Líder Senior'}</p>
+                              <div className="flex flex-wrap items-center gap-3 text-muted-foreground">
+                                 <div className="flex items-center gap-2 px-3 py-1 bg-secondary/10 rounded-lg text-[10px] font-bold uppercase tracking-widest text-primary">
                                     <Calendar className="h-3 w-3" /> {s.date}
                                  </div>
-                                 <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-xl border border-white/10 text-[10px] font-black uppercase tracking-widest text-accent">
+                                 <div className="flex items-center gap-2 px-3 py-1 bg-accent/10 rounded-lg text-[10px] font-bold uppercase tracking-widest text-accent-foreground">
                                     <Clock className="h-3 w-3" /> {s.time}
                                  </div>
                               </div>
                            </div>
                         </div>
-                        <div className="flex gap-4">
-                           <Button variant="outline" className="h-16 px-8 rounded-2xl font-black uppercase tracking-widest text-[10px] border-2 border-primary/20 hover:border-primary/50 transition-all" onClick={() => navigate(`/session/${s.id}`)}>
+                        <div className="flex gap-3">
+                           <Button variant="outline" className="h-12 px-6 rounded-xl font-bold uppercase tracking-widest text-[10px] border-primary/20 hover:border-primary/50 transition-all" onClick={() => navigate(`/session/${s.id}`)}>
                              Sala Ejecutiva
                            </Button>
-                           <Button className="h-16 px-8 rounded-2xl bg-primary text-primary-foreground font-black uppercase tracking-widest text-[10px] shadow-2xl hover:shadow-primary/40 active:scale-95 transition-all">
+                           <Button className="h-12 px-6 rounded-xl bg-primary text-primary-foreground font-bold uppercase tracking-widest text-[10px] shadow-md hover:bg-primary/90 transition-all">
                              Confirmar
                            </Button>
                         </div>
@@ -160,97 +158,94 @@ const MentoraDashboardPage: React.FC = () => {
                     ))}
                   </div>
                 ) : (
-                  <div className="glass rounded-[4rem] p-24 text-center border-dashed border-2 border-border/50 relative overflow-hidden group">
-                    <div className="absolute inset-0 opacity-[0.02] group-hover:scale-110 transition-transform duration-1000">
-                       <Clock className="w-96 h-96 mx-auto -mt-20" />
-                    </div>
-                    <Clock className="h-20 w-20 text-muted-foreground/20 mx-auto mb-8" />
-                    <h3 className="text-2xl font-black text-muted-foreground/60 font-display italic">Sin Pulsos Pendientes</h3>
-                    <p className="text-muted-foreground/40 mt-4 font-medium italic">Tu visibilidad está al máximo. Nuevos retos llegarán pronto.</p>
+                  <div className="bg-card rounded-[3.5rem] p-20 text-center border-dashed border-2 border-border relative overflow-hidden">
+                    <Clock className="h-16 w-16 text-muted-foreground/20 mx-auto mb-6" />
+                    <h3 className="text-xl font-bold text-muted-foreground">Sin Pendientes</h3>
+                    <p className="text-muted-foreground/60 mt-3 font-medium">Tu visibilidad está al máximo. Nuevos retos llegarán pronto.</p>
                   </div>
                 )}
               </section>
 
               <section className="animate-slide-up animation-delay-500">
-                <div className="flex items-center justify-between mb-10 pb-6 border-b border-border/10">
+                <div className="flex items-center justify-between mb-8 pb-4 border-b border-border">
                    <div>
-                      <h2 className="text-3xl font-black text-foreground font-display italic tracking-tight">Bitácora de Impacto</h2>
-                      <p className="text-sm text-muted-foreground font-medium italic mt-1">Transformaciones digitales completadas satisfactoriamente.</p>
+                      <h2 className="text-2xl font-bold text-foreground tracking-tight">Bitácora de Impacto</h2>
+                      <p className="text-sm text-muted-foreground font-medium mt-1">Transformaciones digitales completadas.</p>
                    </div>
-                   <div className="h-12 w-12 rounded-2xl bg-success/10 flex items-center justify-center text-success">
-                      <TrendingUp className="h-6 w-6" />
+                   <div className="h-10 w-10 rounded-xl bg-success/10 flex items-center justify-center text-success">
+                      <TrendingUp className="h-5 w-5" />
                    </div>
                 </div>
                 
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid md:grid-cols-2 gap-4">
                   {completedSessions.length > 0 ? (
                      completedSessions.map((s) => (
-                       <div key={s.id} className="flex items-center justify-between p-8 glass rounded-[2.5rem] border border-transparent hover:border-success/30 hover:shadow-2xl transition-all group">
-                          <div className="flex items-center gap-6">
-                             <div className="h-14 w-14 rounded-2xl bg-success/10 text-success flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform">
-                                <CheckCircle className="h-6 w-6" />
+                       <div key={s.id} className="flex items-center justify-between p-6 bg-card rounded-[2rem] border border-border hover:border-success/30 hover:shadow-lg transition-all group">
+                          <div className="flex items-center gap-4">
+                             <div className="h-12 w-12 rounded-xl bg-success/10 text-success flex items-center justify-center shadow-inner">
+                                <CheckCircle className="h-5 w-5" />
                              </div>
                              <div>
-                                <p className="text-lg font-black text-foreground font-display italic tracking-tight mb-1">{s.menteeName || 'Líder Senior'}</p>
-                                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">{s.date}</p>
+                                <p className="text-base font-bold text-foreground mb-0.5">{s.menteeName || 'Líder Senior'}</p>
+                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{s.date}</p>
                              </div>
                           </div>
                           <div className="text-right">
-                             <span className="px-4 py-2 bg-success/10 text-success text-[8px] font-black uppercase tracking-widest rounded-full border border-success/20">Finalizada</span>
+                             <span className="px-3 py-1 bg-success/10 text-success text-[8px] font-bold uppercase tracking-widest rounded-full border border-success/20">Finalizada</span>
                           </div>
                        </div>
                      ))
                   ) : (
-                    <div className="col-span-full py-20 text-center opacity-30">
-                       <p className="text-xs font-black uppercase tracking-[0.3em]">Comienza tu legado digital hoy.</p>
+                    <div className="col-span-full py-16 text-center opacity-30">
+                       <p className="text-xs font-bold uppercase tracking-widest">Comienza tu legado digital hoy.</p>
                     </div>
                   )}
                 </div>
               </section>
             </div>
 
-            {/* Sidebar / Performance */}
-            <div className="lg:col-span-4 space-y-10 animate-fade-in animation-delay-700">
-                <div className="bg-gradient-to-br from-primary via-zaffre to-primary rounded-[3.5rem] p-12 text-primary-foreground relative overflow-hidden shadow-[0_40px_80px_-15px_rgba(var(--primary-rgb),0.5)] border-2 border-white/10 group">
-                   <div className="absolute -bottom-10 -right-10 opacity-10 group-hover:scale-110 transition-transform duration-1000">
-                      <TrendingUp className="w-64 h-64" />
+            {/* Sidebar */}
+            <div className="lg:col-span-4 space-y-8 animate-fade-in animation-delay-700">
+                <div className="bg-primary rounded-[2.5rem] p-10 text-primary-foreground relative overflow-hidden shadow-xl group">
+                   <div className="absolute -bottom-6 -right-6 opacity-10 group-hover:scale-110 transition-transform duration-700">
+                      <TrendingUp className="w-56 h-56" />
                    </div>
                    <div className="relative z-10">
-                      <div className="h-16 w-16 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center mb-10 shadow-inner">
-                         <Sparkles className="h-8 w-8" />
+                      <div className="h-14 w-14 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center mb-8">
+                         <Sparkles className="h-7 w-7" />
                       </div>
-                      <h3 className="text-3xl font-black font-display italic mb-6 leading-tight">Crecimiento Exponencial</h3>
-                      <p className="text-lg font-medium opacity-80 mb-10 leading-relaxed italic">Tu perfil ha escalado un <span className="font-black text-white">83%</span> en el algoritmo. Los líderes buscan tu maestría en <span className="font-black text-accent italic">Prompt Engineering Business</span>.</p>
-                      <Button className="w-full bg-white text-primary hover:bg-theme-white/90 rounded-[2rem] h-20 font-black uppercase tracking-widest text-xs shadow-2xl transition-all active:scale-95 group/btn">
-                         Optimizar Mi Perfil <ArrowRight className="h-5 w-5 ml-4 group-hover:translate-x-2 transition-transform" />
+                      <h3 className="text-2xl font-bold mb-4 leading-tight">Crecimiento del Perfil</h3>
+                      <p className="text-base font-medium opacity-80 mb-8 leading-relaxed">Tu perfil ha escalado un <span className="font-bold">83%</span> en el algoritmo. Los líderes buscan expertos en <span className="text-accent-foreground font-bold">IA Corporativa</span>.</p>
+                      <Button className="w-full bg-white text-primary hover:bg-white/90 rounded-xl h-14 font-bold uppercase tracking-widest text-xs shadow-md group/btn">
+                         Optimizar Mi Perfil <ArrowRight className="h-4 w-4 ml-3 group-hover:translate-x-1 transition-transform" />
                       </Button>
                    </div>
                 </div>
 
-               <div className="glass rounded-[3rem] p-12 border-white/10 shadow-2xl relative overflow-hidden">
-                  <div className="absolute top-0 right-0 p-10 opacity-[0.02]">
-                     <Brain className="h-32 w-32" />
+               <div className="bg-card rounded-[2.5rem] p-10 border border-border shadow-md relative overflow-hidden">
+                  <div className="absolute top-0 right-0 p-8 opacity-[0.02]">
+                     <Brain className="h-24 w-24" />
                   </div>
-                  <h3 className="text-sm font-black text-muted-foreground uppercase tracking-[0.3em] mb-12 flex items-center gap-3">
-                     <Target className="h-5 w-5 text-primary" /> Objetivos de Maestría
+                  <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-10 flex items-center gap-2">
+                     <Target className="h-4 w-4 text-primary" /> Objetivos de Maestría
                   </h3>
-                  <div className="space-y-10 relative z-10">
+                  <div className="space-y-8 relative z-10">
                      {[
                        { title: 'Certificación AI-PRO', desc: 'Desbloquea el módulo de "IA para Directorios" para triplicar tus leads.', color: 'primary' },
-                       { title: 'Feedback Snapshot', desc: 'Tienes 3 nuevos testimonios ejecutivos listos para brillar en tu perfil.', color: 'accent' }
+                       { title: 'FeedbackSnapshot', desc: 'Tienes 3 nuevos testimonios ejecutivos listos para brillar en tu perfil.', color: 'accent' }
                      ].map((item, i) => (
-                       <div key={i} className="flex gap-6 group">
-                          <div className={cn("h-3 w-3 rounded-full mt-1.5 shrink-0 shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]", i === 0 ? "bg-primary" : "bg-accent")} />
+                       <div key={i} className="flex gap-4 group">
+                          <div className={cn("h-2.5 w-2.5 rounded-full mt-1 shrink-0 shadow-sm", i === 0 ? "bg-primary" : "bg-accent")} />
                           <div>
-                             <p className="font-black text-sm uppercase tracking-widest mb-2 italic">{item.title}</p>
-                             <p className="text-xs text-muted-foreground font-medium italic leading-relaxed">{item.desc}</p>
+                             <p className="font-bold text-sm uppercase tracking-wider mb-1">{item.title}</p>
+                             <p className="text-xs text-muted-foreground font-medium leading-relaxed">{item.desc}</p>
                           </div>
                        </div>
                      ))}
                   </div>
                   
-                  <div className="mt-12 pt-10 border-t border-border/10">
-                     <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em] mb-6">Nivel de Impacto: Platinum</p>
+                  <div className="mt-10 pt-8 border-t border-border">
+                     <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-4">Nivel de Impacto: Platinum Hub</p>
                      <ProgressBar value={92} variant="success" size="lg" />
                   </div>
                </div>

@@ -10,12 +10,8 @@ import {
   ArrowRight,
   ArrowLeft,
   CheckCircle,
-  User,
-  Target,
-  Heart,
   Sparkles,
 } from 'lucide-react';
-import { Progress } from '@/components/ui/progress';
 
 const stages = ['directivo', 'gerencial', 'independiente', 'reinvención'] as const;
 const countries = ['Perú', 'Colombia', 'México', 'Brasil'] as const;
@@ -53,10 +49,6 @@ const supportTypes = [
   'Liderazgo en entornos digitales',
 ] as const;
 
-const industries = [
-  'Tech/SaaS', 'Educación', 'Salud', 'Fintech', 'Energía', 'Manufactura', 'Investigación', 'Gobierno/ONG', 'Startups', 'Otro'
-] as const;
-
 const scheduleOptions = [
   { id: 'morning', label: 'Mañanas (6:00 – 12:00)' },
   { id: 'afternoon', label: 'Tardes (12:00 – 18:00)' },
@@ -83,7 +75,6 @@ const MenteeOnboardingPage: React.FC = () => {
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
   
   const [level, setLevel] = useState('');
-  const [preferredLanguage, setPreferredLanguage] = useState('Español');
   const [selectedSchedules, setSelectedSchedules] = useState<string[]>([]);
 
   const handleNext = () => {
@@ -116,7 +107,7 @@ const MenteeOnboardingPage: React.FC = () => {
   const canProceed = () => {
     switch (step) {
       case 1: return age && city && country && stage;
-      case 2: return stemArea && selectedSubThemes.length > 0 && objective && selectedSupport.length > 0 && selectedIndustries.length > 0;
+      case 2: return stemArea && selectedSubThemes.length > 0 && objective && selectedSupport.length > 0;
       case 3: return level;
       case 4: return selectedSchedules.length > 0;
       default: return false;
@@ -124,97 +115,97 @@ const MenteeOnboardingPage: React.FC = () => {
   };
 
   const stepTitles = [
-    'Perfil Ejecutivo',
-    'Estrategia Digital',
-    'Diagnóstico',
-    'Preferencia Coach'
+    'Perfil',
+    'Estrategia',
+    'Nivel',
+    'Preferencias'
   ];
 
   return (
-    <div className="min-h-screen bg-background bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-fixed flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
       <div className="flex-1 flex items-center justify-center pt-24 pb-12 px-4">
         <div className="w-full max-w-4xl">
           
-          {/* Executive Progress Header */}
+          {/* Progress Header */}
           <div className="mb-12">
             <div className="flex justify-between items-center mb-6">
                {stepTitles.map((title, i) => (
                  <div key={i} className="flex flex-col items-center gap-2 group">
                    <div className={cn(
-                     "w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-lg",
-                     step > i + 1 ? "bg-success text-success-foreground scale-90" : 
-                     step === i + 1 ? "bg-primary text-primary-foreground scale-110 shadow-primary/30 rotate-3" : 
-                     "bg-secondary/50 text-muted-foreground"
+                     "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 shadow-sm",
+                     step > i + 1 ? "bg-success text-success-foreground" : 
+                     step === i + 1 ? "bg-primary text-primary-foreground scale-110 shadow-md" : 
+                     "bg-secondary/40 text-muted-foreground"
                    )}>
-                     {step > i + 1 ? <CheckCircle className="h-6 w-6" /> : <span className="font-black text-lg">{i + 1}</span>}
+                     {step > i + 1 ? <CheckCircle className="h-5 w-5" /> : <span className="font-bold text-base">{i + 1}</span>}
                    </div>
                    <span className={cn(
-                     "text-[10px] font-black uppercase tracking-[0.2em] hidden md:block transition-colors",
+                     "text-[10px] font-bold uppercase tracking-widest hidden md:block transition-colors",
                      step === i + 1 ? "text-primary" : "text-muted-foreground/50"
                    )}>{title}</span>
                  </div>
                ))}
             </div>
-            <div className="h-1 w-full bg-secondary/30 rounded-full overflow-hidden">
+            <div className="h-1.5 w-full bg-secondary/30 rounded-full overflow-hidden">
                <div 
-                 className="h-full bg-primary transition-all duration-700 ease-out" 
+                 className="h-full bg-primary transition-all duration-500 ease-out" 
                  style={{ width: `${(step / totalSteps) * 100}%` }}
                />
             </div>
           </div>
 
           {/* Main Card */}
-          <div className="glass rounded-[3rem] border-white/20 p-10 md:p-16 shadow-2xl relative overflow-hidden animate-scale-in">
-            <div className="absolute top-0 right-0 p-12 opacity-[0.02] pointer-events-none">
+          <div className="bg-card rounded-[2.5rem] border border-border p-8 md:p-14 shadow-lg relative overflow-hidden animate-fade-in">
+            <div className="absolute top-0 right-0 p-12 opacity-[0.01] pointer-events-none">
               <Sparkles className="w-64 h-64" />
             </div>
 
-            <div className="relative z-10 transition-all duration-500">
+            <div className="relative z-10">
               {step === 1 && (
-                <div className="space-y-10 animate-fade-in">
+                <div className="space-y-10">
                   <div>
-                    <h2 className="text-3xl md:text-5xl font-black text-foreground mb-4 font-display italic tracking-tight">
-                      Tu Trayectoria es el Cimiento.
+                    <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4 tracking-tight leading-tight">
+                      Tu Perfil Ejecutivo.
                     </h2>
-                    <p className="text-xl text-muted-foreground font-medium">
-                      Iniciemos personalizando tu experiencia según tu perfil de liderazgo.
+                    <p className="text-lg text-muted-foreground font-medium">
+                      Iniciemos personalizando tu experiencia según tu trayectoria de liderazgo.
                     </p>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-8">
-                    <div className="space-y-3">
-                      <Label className="font-black uppercase tracking-widest text-xs opacity-60">Edad</Label>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Edad</Label>
                       <Input
                         type="number"
                         placeholder="Ej: 55"
                         value={age}
                         onChange={(e) => setAge(e.target.value)}
-                        className="h-16 rounded-2xl bg-background/50 border-2 text-xl font-bold px-6 focus:border-primary transition-all"
+                        className="h-14 rounded-xl bg-background border-2 text-lg font-bold px-6 focus:border-primary transition-all"
                       />
                     </div>
-                    <div className="space-y-3">
-                      <Label className="font-black uppercase tracking-widest text-xs opacity-60">Ciudad de Residencia</Label>
+                    <div className="space-y-2">
+                      <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Ciudad</Label>
                       <Input
-                        placeholder="Ej: Miraflores, Lima"
+                        placeholder="Ej: Lima, Perú"
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
-                        className="h-16 rounded-2xl bg-background/50 border-2 text-xl font-bold px-6 focus:border-primary transition-all"
+                        className="h-14 rounded-xl bg-background border-2 text-lg font-bold px-6 focus:border-primary transition-all"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    <Label className="font-black uppercase tracking-widest text-xs opacity-60">País</Label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">País</Label>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {countries.map((c) => (
                         <button
                           key={c}
                           onClick={() => setCountry(c)}
                           className={cn(
-                            "h-14 rounded-xl border-2 font-black transition-all flex items-center justify-center tracking-widest uppercase text-xs",
-                            country === c ? "bg-primary text-primary-foreground border-primary shadow-lg scale-105" : "bg-background/30 border-border/50 hover:border-primary/50 text-muted-foreground"
+                            "h-12 rounded-xl border-2 font-bold transition-all flex items-center justify-center tracking-widest uppercase text-[10px]",
+                            country === c ? "bg-primary text-primary-foreground border-primary shadow-md" : "bg-background border-border hover:border-primary/40 text-muted-foreground"
                           )}
                         >
                           {c}
@@ -224,22 +215,22 @@ const MenteeOnboardingPage: React.FC = () => {
                   </div>
 
                   <div className="space-y-4">
-                    <Label className="font-black uppercase tracking-widest text-xs opacity-60">Estatus Ejecutivo</Label>
+                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Nivel de Responsabilidad</Label>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {stages.map((s) => (
                         <button
                           key={s}
                           onClick={() => setStage(s)}
                           className={cn(
-                            "p-6 rounded-2xl border-2 text-left transition-all group",
-                            stage === s ? "bg-primary/5 border-primary shadow-inner" : "bg-background/30 border-border/50 hover:border-primary/30"
+                            "p-6 rounded-2xl border-2 text-left transition-all",
+                            stage === s ? "bg-primary/5 border-primary shadow-sm" : "bg-background border-border hover:border-primary/20"
                           )}
                         >
-                          <p className={cn("text-lg font-black font-display italic transition-colors", stage === s ? "text-primary" : "text-foreground")}>
+                          <p className={cn("text-lg font-bold transition-colors", stage === s ? "text-primary" : "text-foreground")}>
                             {s.charAt(0).toUpperCase() + s.slice(1)}
                           </p>
                           <p className="text-sm text-muted-foreground font-medium mt-1">
-                            {s === 'reinvención' ? 'Buscando nuevas verticales de consultoría o negocio.' : `Liderazgo en nivel ${s} corporativo.`}
+                            {s === 'reinvención' ? 'Buscando nuevas oportunidades o modelos de negocio.' : `Experiencia en nivel ${s} corporativo.`}
                           </p>
                         </button>
                       ))}
@@ -249,46 +240,46 @@ const MenteeOnboardingPage: React.FC = () => {
               )}
 
               {step === 2 && (
-                <div className="space-y-10 animate-fade-in">
+                <div className="space-y-10">
                   <div>
-                    <h2 className="text-3xl md:text-5xl font-black text-foreground mb-4 font-display italic tracking-tight">
-                      Estrategia de Transformación.
+                    <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4 tracking-tight leading-tight">
+                      Objetivos Digitales.
                     </h2>
-                    <p className="text-xl text-muted-foreground font-medium">
-                      Selecciona las palancas tecnológicas que potenciarán tu carrera.
+                    <p className="text-lg text-muted-foreground font-medium">
+                      Selecciona las áreas tecnológicas que deseas dominar.
                     </p>
                   </div>
 
                   <div className="space-y-4">
-                    <Label className="font-black uppercase tracking-widest text-xs opacity-60">Área de Poder Digital</Label>
+                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Área Principal</Label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       {stemAreas.map((area) => (
                         <button
                           key={area.id}
                           onClick={() => { setStemArea(area.id); setSelectedSubThemes([]); }}
                           className={cn(
-                            "p-6 rounded-3xl border-2 flex flex-col items-center gap-4 transition-all group",
-                            stemArea === area.id ? "bg-primary text-primary-foreground border-primary shadow-xl scale-105" : "bg-background/30 border-border/50 hover:border-primary/20"
+                            "p-6 rounded-2xl border-2 flex flex-col items-center gap-3 transition-all",
+                            stemArea === area.id ? "bg-primary text-primary-foreground border-primary shadow-md" : "bg-background border-border hover:border-primary/20"
                           )}
                         >
-                          <span className="text-4xl group-hover:scale-110 transition-transform">{area.icon}</span>
-                          <span className="text-[10px] font-black uppercase tracking-widest text-center">{area.name}</span>
+                          <span className="text-3xl">{area.icon}</span>
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-center">{area.name}</span>
                         </button>
                       ))}
                     </div>
                   </div>
 
                   {stemArea && (
-                    <div className="space-y-4 animate-slide-up">
-                      <Label className="font-black uppercase tracking-widest text-xs opacity-60">Temas Específicos (Máx. 3)</Label>
+                    <div className="space-y-4 animate-fade-in">
+                      <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Temas de Interés (Máx. 3)</Label>
                       <div className="flex flex-wrap gap-2">
                         {subThemes[stemArea as keyof typeof subThemes].map((theme) => (
                           <button
                             key={theme}
                             onClick={() => toggleSelection(theme, selectedSubThemes, setSelectedSubThemes, 3)}
                             className={cn(
-                              "px-6 py-3 rounded-full border-2 font-bold text-sm transition-all",
-                              selectedSubThemes.includes(theme) ? "bg-accent text-accent-foreground border-accent shadow-lg" : "bg-background/50 border-border/50 hover:border-accent/40"
+                              "px-5 py-2.5 rounded-xl border-2 font-bold text-xs transition-all",
+                              selectedSubThemes.includes(theme) ? "bg-primary text-white border-primary shadow-md" : "bg-background border-border hover:border-primary/40 text-muted-foreground"
                             )}
                           >
                             {theme}
@@ -299,15 +290,15 @@ const MenteeOnboardingPage: React.FC = () => {
                   )}
 
                   <div className="space-y-4">
-                    <Label className="font-black uppercase tracking-widest text-xs opacity-60">Objetivo de Impacto</Label>
-                    <div className="space-y-3">
+                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Meta Principal</Label>
+                    <div className="space-y-2">
                       {objectives.map((o) => (
                         <button
                           key={o}
                           onClick={() => setObjective(o)}
                           className={cn(
-                            "w-full p-5 rounded-2xl border-2 text-left font-bold transition-all",
-                            objective === o ? "bg-primary/5 border-primary" : "bg-background/30 border-border/50 hover:border-primary/30"
+                            "w-full p-4 rounded-xl border-2 text-left font-bold text-sm transition-all",
+                            objective === o ? "bg-primary/5 border-primary" : "bg-background border-border hover:border-primary/20"
                           )}
                         >
                           {o}
@@ -317,15 +308,15 @@ const MenteeOnboardingPage: React.FC = () => {
                   </div>
 
                   <div className="space-y-4">
-                    <Label className="font-black uppercase tracking-widest text-xs opacity-60">Nivel de Soporte</Label>
+                    <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Tipo de Acompañamiento</Label>
                     <div className="flex flex-wrap gap-2">
                       {supportTypes.slice(0, 6).map((s) => (
                         <button
                           key={s}
                           onClick={() => toggleSelection(s, selectedSupport, setSelectedSupport, 3)}
                           className={cn(
-                            "px-5 py-2.5 rounded-xl border font-bold text-xs uppercase tracking-widest transition-all",
-                            selectedSupport.includes(s) ? "bg-primary text-white border-primary" : "bg-background/30 border-border/50"
+                            "px-4 py-2 rounded-lg border font-bold text-[10px] uppercase tracking-widest transition-all",
+                            selectedSupport.includes(s) ? "bg-primary text-white border-primary" : "bg-background border-border"
                           )}
                         >
                           {s}
@@ -337,33 +328,33 @@ const MenteeOnboardingPage: React.FC = () => {
               )}
 
               {step === 3 && (
-                <div className="space-y-10 animate-fade-in">
+                <div className="space-y-10">
                   <div>
-                    <h2 className="text-3xl md:text-5xl font-black text-foreground mb-4 font-display italic tracking-tight">
-                      Diagnóstico de Partida.
+                    <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4 tracking-tight leading-tight">
+                      Nivel de Experiencia.
                     </h2>
-                    <p className="text-xl text-muted-foreground font-medium">
-                      Sé honesto con tu dominio actual para encontrar al Coach que mejor se adapte.
+                    <p className="text-lg text-muted-foreground font-medium">
+                      Esto nos ayudará a encontrar el ritmo ideal para tus sesiones.
                     </p>
                   </div>
 
-                  <div className="grid gap-6">
+                  <div className="grid gap-4">
                     {['Principiante', 'Intermedio', 'Avanzado'].map((l) => (
                       <button
                         key={l}
                         onClick={() => setLevel(l)}
                         className={cn(
                           "p-8 rounded-[2rem] border-2 text-left transition-all flex items-center justify-between group",
-                          level === l ? "bg-primary/5 border-primary shadow-inner" : "bg-background/30 border-border/50 hover:border-primary/20"
+                          level === l ? "bg-primary/5 border-primary shadow-sm" : "bg-background border-border hover:border-primary/20"
                         )}
                       >
                         <div>
-                           <p className={cn("text-2xl font-black font-display italic", level === l ? "text-primary" : "text-foreground")}>{l}</p>
-                           <p className="text-muted-foreground font-medium mt-1">
-                              {l === 'Principiante' ? 'Sin experiencia previa con estas herramientas.' : l === 'Intermedio' ? 'Uso ocasional, necesito fluidez estratégica.' : 'Tengo bases sólidas, busco maestría avanzada.'}
+                           <p className={cn("text-2xl font-bold transition-colors", level === l ? "text-primary" : "text-foreground")}>{l}</p>
+                           <p className="text-sm text-muted-foreground font-medium mt-1">
+                              {l === 'Principiante' ? 'Sin experiencia previa con estas herramientas.' : l === 'Intermedio' ? 'Uso ocasional, necesito mayor fluidez.' : 'Tengo bases sólidas, busco perfeccionamiento.'}
                            </p>
                         </div>
-                        <div className={cn("h-8 w-8 rounded-full border-4 flex items-center justify-center transition-all", level === l ? "border-primary bg-primary" : "border-border")}>
+                        <div className={cn("h-6 w-6 rounded-full border-2 flex items-center justify-center transition-all", level === l ? "border-primary bg-primary" : "border-border")}>
                            {level === l && <CheckCircle className="h-4 w-4 text-white" />}
                         </div>
                       </button>
@@ -373,51 +364,51 @@ const MenteeOnboardingPage: React.FC = () => {
               )}
 
               {step === 4 && (
-                <div className="space-y-10 animate-fade-in">
+                <div className="space-y-10">
                   <div>
-                    <h2 className="text-3xl md:text-5xl font-black text-foreground mb-4 font-display italic tracking-tight">
-                      Sincronización Final.
+                    <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4 tracking-tight leading-tight">
+                      Preferencias de Sesión.
                     </h2>
-                    <p className="text-xl text-muted-foreground font-medium">
-                      Define cuándo y cómo quieres recibir tu Coaching Digital.
+                    <p className="text-lg text-muted-foreground font-medium">
+                      Define tu disponibilidad para las mentorías digitales.
                     </p>
                   </div>
 
                   <div className="space-y-8">
-                    <div className="bg-secondary/20 p-8 rounded-3xl border border-border/50">
-                       <h4 className="text-xs font-black uppercase tracking-widest text-muted-foreground mb-4">Idioma del Coaching</h4>
+                    <div className="bg-secondary/5 p-8 rounded-2xl border border-border">
+                       <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-4">Idioma</h4>
                        <div className="flex items-center gap-4">
-                          <div className="h-12 w-12 rounded-xl bg-primary text-white flex items-center justify-center font-black">ES</div>
-                          <span className="text-xl font-bold">Castellano (Predeterminado)</span>
+                          <div className="h-10 w-10 rounded-lg bg-primary text-white flex items-center justify-center font-bold">ES</div>
+                          <span className="text-lg font-bold">Español</span>
                        </div>
                     </div>
 
                     <div className="space-y-4">
-                      <Label className="font-black uppercase tracking-widest text-xs opacity-60">Disponibilidad Ejecutiva</Label>
+                      <Label className="font-bold uppercase tracking-widest text-[10px] opacity-60 ml-1">Disponibilidad sugerida</Label>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {scheduleOptions.map((opt) => (
                            <button
                              key={opt.id}
                              onClick={() => toggleSelection(opt.id, selectedSchedules, setSelectedSchedules, 2)}
                              className={cn(
-                               "h-20 px-8 rounded-2xl border-2 flex items-center justify-between font-bold text-lg transition-all",
-                               selectedSchedules.includes(opt.id) ? "bg-primary text-white border-primary shadow-xl" : "bg-background/30 border-border/50 hover:border-primary/30"
+                               "h-16 px-6 rounded-xl border-2 flex items-center justify-between font-bold text-base transition-all",
+                               selectedSchedules.includes(opt.id) ? "bg-primary text-white border-primary shadow-md" : "bg-background border-border hover:border-primary/20"
                              )}
                            >
                               {opt.label}
-                              {selectedSchedules.includes(opt.id) && <CheckCircle className="h-6 w-6" />}
+                              {selectedSchedules.includes(opt.id) && <CheckCircle className="h-5 w-5" />}
                            </button>
                         ))}
                       </div>
                     </div>
 
-                    <div className="p-8 bg-gradient-primary rounded-[2rem] text-primary-foreground flex items-center gap-8 shadow-2xl">
-                       <div className="h-16 w-16 bg-primary-foreground/20 rounded-2xl flex items-center justify-center shrink-0">
-                          <Sparkles className="h-8 w-8" />
+                    <div className="p-8 bg-primary rounded-2xl text-primary-foreground flex items-center gap-6 shadow-lg">
+                       <div className="h-12 w-12 bg-white/10 rounded-xl flex items-center justify-center shrink-0 border border-white/20">
+                          <Sparkles className="h-6 w-6" />
                        </div>
                        <div>
-                          <p className="text-lg font-black italic font-display">¡Listo para la Transformación!</p>
-                          <p className="text-sm opacity-80 font-medium">Nuestro motor de IA está procesando tu perfil para las mejores recomendaciones.</p>
+                          <p className="text-lg font-bold">¡Todo listo para comenzar!</p>
+                          <p className="text-sm opacity-80 font-medium text-pretty">Estamos preparando las mejores recomendaciones de coaches para tu perfil.</p>
                        </div>
                     </div>
                   </div>
@@ -426,12 +417,12 @@ const MenteeOnboardingPage: React.FC = () => {
             </div>
 
             {/* Navigation Buttons */}
-            <div className="mt-16 pt-10 border-t border-border/50 flex flex-col sm:flex-row gap-4 items-center justify-between relative z-10">
+            <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row gap-4 items-center justify-between">
               <Button
                 variant="outline"
                 onClick={handleBack}
                 disabled={step === 1}
-                className="h-14 px-10 rounded-2xl font-black uppercase tracking-widest text-xs border-2 hover:bg-secondary/50 transition-all w-full sm:w-auto"
+                className="h-12 px-8 rounded-xl font-bold uppercase tracking-widest text-[10px] border-border hover:bg-secondary/10 transition-all w-full sm:w-auto"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Atrás
@@ -439,9 +430,9 @@ const MenteeOnboardingPage: React.FC = () => {
               <Button
                 onClick={handleNext}
                 disabled={!canProceed()}
-                className="h-14 px-12 rounded-2xl font-black uppercase tracking-widest text-xs bg-primary text-primary-foreground shadow-xl hover:shadow-primary/30 transition-all w-full sm:w-auto active:scale-95"
+                className="h-12 px-10 rounded-xl font-bold uppercase tracking-widest text-[10px] bg-primary text-primary-foreground shadow-md hover:bg-primary/90 transition-all w-full sm:w-auto active:scale-95"
               >
-                {step === totalSteps ? 'Finalizar Perfil' : 'Siguiente Paso'}
+                {step === totalSteps ? 'Finalizar Registro' : 'Siguiente'}
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </div>

@@ -129,12 +129,7 @@ const BookingPage: React.FC = () => {
           const key = 'smd_sessions';
           const raw = window.localStorage.getItem(key);
           const existing = raw ? JSON.parse(raw) : [];
-          let id: string;
-          if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
-            id = (crypto as { randomUUID?: () => string }).randomUUID?.() ?? `${Date.now()}`;
-          } else {
-            id = `${Date.now()}`;
-          }
+          let id = `${Date.now()}`;
 
           const newSession = {
             id,
@@ -158,21 +153,20 @@ const BookingPage: React.FC = () => {
 
       setIsProcessing(false);
       setStep(3);
-    }, 2200);
+    }, 2000);
   };
 
   if (isProcessing) {
     return (
       <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
-        <div className="text-center space-y-12 animate-pulse">
-          <div className="relative h-40 w-40 mx-auto flex items-center justify-center">
-            <div className="absolute inset-0 border-[6px] border-primary/10 border-t-primary rounded-full animate-spin"></div>
-            <div className="absolute inset-6 border-[6px] border-accent/10 border-b-accent rounded-full animate-spin-slow"></div>
-            <CreditCard className="h-16 w-16 text-primary relative z-10" />
+        <div className="text-center space-y-8">
+          <div className="relative h-24 w-24 mx-auto flex items-center justify-center">
+            <div className="absolute inset-0 border-4 border-primary/10 border-t-primary rounded-full animate-spin"></div>
+            <CreditCard className="h-10 w-10 text-primary" />
           </div>
-          <div className="space-y-4">
-            <h2 className="text-4xl font-black text-foreground font-display italic tracking-tight">Cifrando Operación.</h2>
-            <p className="text-primary font-black uppercase tracking-[0.4em] text-xs">Security Protocol v4.0 Active</p>
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold text-foreground tracking-tight">Procesando Pago...</h2>
+            <p className="text-muted-foreground text-sm font-medium">Espera un momento, estamos confirmando tu sesión.</p>
           </div>
         </div>
       </div>
@@ -181,33 +175,30 @@ const BookingPage: React.FC = () => {
 
   if (step === 3) {
     return (
-      <div className="min-h-screen bg-background text-foreground transition-all duration-700 selection:bg-primary/20 flex flex-col">
+      <div className="min-h-screen bg-background text-foreground flex flex-col">
         <Navbar />
         <div className="flex-1 flex items-center justify-center pt-16 px-4">
-          <div className="glass rounded-[4rem] p-16 max-w-2xl w-full text-center animate-scale-in shadow-[0_50px_100px_-20px_rgba(var(--primary-rgb),0.2)] relative overflow-hidden border-white/20">
-            <div className="absolute top-0 right-0 p-12 opacity-[0.03] rotate-12">
-               <CheckCircle className="h-80 w-80" />
+          <div className="bg-card rounded-[2.5rem] p-12 max-w-xl w-full text-center animate-fade-in shadow-xl border border-border">
+            <div className="h-20 w-20 rounded-2xl bg-success/10 flex items-center justify-center mx-auto mb-8 border border-success/20">
+              <CheckCircle className="h-10 w-10 text-success" />
             </div>
-            <div className="h-32 w-32 rounded-[3rem] bg-success/10 flex items-center justify-center mx-auto mb-10 border-2 border-success/20 shadow-inner">
-              <CheckCircle className="h-16 w-16 text-success" />
-            </div>
-            <h1 className="text-5xl font-black text-foreground font-display italic mb-6 tracking-tight">Sesión Confirmada.</h1>
-            <p className="text-2xl text-muted-foreground font-medium mb-16 leading-relaxed">
-              Tu encuentro estratégico con <span className="text-foreground font-black italic">{mentor.name}</span> ha sido blindado para el <span className="text-primary font-black">{selectedDate}</span> a las <span className="text-primary font-black">{selectedTime}</span>.
+            <h1 className="text-4xl font-bold text-foreground mb-4 tracking-tight">Sesión Confirmada.</h1>
+            <p className="text-lg text-muted-foreground font-medium mb-12 leading-relaxed">
+              Tu encuentro estratégico con <span className="text-foreground font-bold">{mentor.name}</span> ha sido reservado para el <span className="text-primary font-bold">{selectedDate}</span> a las <span className="text-primary font-bold">{selectedTime}</span>.
             </p>
-            <div className="grid gap-6">
+            <div className="grid gap-4">
               <Button 
-                className="h-20 rounded-[2rem] bg-primary text-primary-foreground font-black uppercase tracking-widest text-xs shadow-2xl hover:shadow-primary/40 active:scale-95 transition-all" 
+                className="h-14 rounded-xl bg-primary text-primary-foreground font-bold uppercase tracking-widest text-xs shadow-md hover:bg-primary/90 transition-all" 
                 onClick={() => navigate('/mentee/dashboard')}
               >
-                Acceder a mi Panel Central
+                Ir a mi Panel
               </Button>
               <Button 
                 variant="ghost" 
-                className="h-16 rounded-[2rem] font-black uppercase tracking-widest text-[10px] text-muted-foreground hover:bg-secondary/50" 
+                className="h-14 rounded-xl font-bold uppercase tracking-widest text-[10px] text-muted-foreground hover:bg-secondary/10" 
                 onClick={() => navigate('/matching')}
               >
-                Explorar otros expertos digitales
+                Explorar otros expertos
               </Button>
             </div>
           </div>
@@ -217,91 +208,85 @@ const BookingPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-all duration-700 selection:bg-primary/20 flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
       <div className="pt-28 pb-20 px-4">
         <div className="max-w-5xl mx-auto">
           <Button 
             variant="ghost" 
             onClick={() => step === 1 ? navigate(-1) : setStep(1)} 
-            className="mb-12 font-black uppercase tracking-widest text-[10px] hover:bg-secondary/50 rounded-2xl h-14 px-8"
+            className="mb-10 font-bold uppercase tracking-widest text-[10px] hover:bg-secondary/10 rounded-xl h-12 px-6"
           >
-            <ArrowLeft className="h-5 w-5 mr-3" /> {step === 1 ? 'Volver al Perfil' : 'Ajustar Horario'}
+            <ArrowLeft className="h-4 w-4 mr-2" /> {step === 1 ? 'Volver al Perfil' : 'Ajustar Horario'}
           </Button>
           
-          <div className="grid lg:grid-cols-12 gap-12">
-             {/* Info Sidebar - Luxury Preview */}
-             <div className="lg:col-span-4 space-y-8 lg:order-2">
-                <div className="glass rounded-[3rem] p-10 border-white/20 shadow-2xl overflow-hidden relative group">
-                   <div className="absolute top-0 right-0 p-10 opacity-[0.03] group-hover:rotate-12 transition-transform duration-1000">
-                      <CreditCard className="w-48 h-48" />
-                   </div>
-                   <div className="relative z-10 space-y-10">
+          <div className="grid lg:grid-cols-12 gap-10">
+             {/* Info Sidebar */}
+             <div className="lg:col-span-4 space-y-6 lg:order-2">
+                <div className="bg-card rounded-[2.5rem] p-8 border border-border shadow-md relative overflow-hidden group">
+                   <div className="relative z-10 space-y-8">
                       <div className="flex flex-col items-center text-center">
-                        <div className="relative mb-6">
-                          <img src={mentor.imageUrl} alt={mentor.name} className="w-32 h-32 rounded-[2.5rem] object-cover shadow-2xl border-4 border-background group-hover:rotate-3 transition-all" />
-                          <div className="absolute -bottom-2 -right-2 h-10 w-10 bg-success border-4 border-background rounded-2xl flex items-center justify-center shadow-lg">
-                            <CheckCircle className="h-5 w-5 text-success-foreground" />
+                        <div className="relative mb-4">
+                          <img src={mentor.imageUrl} alt={mentor.name} className="w-24 h-24 rounded-2xl object-cover shadow-md border-2 border-background" />
+                          <div className="absolute -bottom-1 -right-1 h-8 w-8 bg-success border-2 border-background rounded-xl flex items-center justify-center shadow-md">
+                            <CheckCircle className="h-4 w-4 text-success-foreground" />
                           </div>
                         </div>
-                        <h2 className="font-black text-2xl italic font-display tracking-tight leading-none mb-2">{mentor.name}</h2>
-                        <p className="text-[10px] font-black text-primary uppercase tracking-[0.3em] opacity-80">{mentor.title}</p>
+                        <h2 className="font-bold text-xl tracking-tight leading-tight mb-1">{mentor.name}</h2>
+                        <p className="text-[10px] font-bold text-primary uppercase tracking-widest opacity-80">{mentor.title}</p>
                       </div>
 
-                      <div className="space-y-6 pt-10 border-t border-border/10">
+                      <div className="space-y-4 pt-6 border-t border-border">
                          <div className="flex justify-between items-center">
-                            <span className="font-black text-muted-foreground uppercase tracking-widest text-[10px]">Inversión</span>
+                            <span className="font-bold text-muted-foreground uppercase tracking-widest text-[10px]">Inversión</span>
                             <div className="flex items-baseline gap-1">
-                               <span className="text-xs font-black text-muted-foreground">S/</span>
-                               <span className="text-3xl font-black tracking-tighter">149</span>
+                               <span className="text-xs font-bold text-muted-foreground">S/</span>
+                               <span className="text-2xl font-bold tracking-tight">149</span>
                             </div>
                          </div>
                          <div className="flex justify-between items-center">
-                            <span className="font-black text-muted-foreground uppercase tracking-widest text-[10px]">Duración</span>
-                            <span className="font-black text-lg">60 <span className="text-xs text-muted-foreground">min</span></span>
+                            <span className="font-bold text-muted-foreground uppercase tracking-widest text-[10px]">Duración</span>
+                            <span className="font-bold text-lg text-primary">60 <span className="text-xs text-muted-foreground">min</span></span>
                          </div>
                          {selectedDate && (
-                           <div className="p-6 rounded-[2rem] bg-primary/5 border border-primary/20 animate-fade-in text-center">
-                              <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-2">Bloque Reservado</p>
-                              <p className="text-xl font-black text-foreground uppercase tracking-tighter">{selectedDate} <span className="text-primary mx-1">@</span> {selectedTime}</p>
+                           <div className="p-4 rounded-xl bg-primary/5 border border-primary/20 animate-fade-in text-center">
+                              <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">Bloque Reservado</p>
+                              <p className="text-lg font-bold text-foreground">{selectedDate} @ {selectedTime}</p>
                            </div>
                          )}
                       </div>
                    </div>
                 </div>
 
-                <div className="p-10 rounded-[3rem] bg-secondary/10 border border-border/10 relative overflow-hidden group">
-                    <div className="absolute -bottom-5 -right-5 opacity-5 group-hover:scale-120 transition-transform">
-                       <Sparkles className="h-32 w-32" />
-                    </div>
-                    <p className="text-xs font-bold text-muted-foreground/70 leading-relaxed relative z-10 italic">
-                       "En SilverHub, cada sesión es protegida bajo protocolos de confidencialidad de alto nivel. Incluimos seguimiento estratégico por 24 horas."
+                <div className="p-8 rounded-[2rem] bg-secondary/5 border border-border">
+                    <p className="text-xs font-medium text-muted-foreground leading-relaxed">
+                       Paga de forma segura con tarjeta de crédito o débito. La sesión se realizará a través de nuestra plataforma propia.
                     </p>
                 </div>
              </div>
 
-             {/* Main Form Area - Premium Stepper */}
-             <div className="lg:col-span-8 animate-slide-up">
-                <div className="glass rounded-[4rem] p-10 md:p-16 border-white/20 shadow-2xl relative overflow-hidden">
+             {/* Main Area */}
+             <div className="lg:col-span-8 animate-fade-in">
+                <div className="bg-card rounded-[2.5rem] p-8 md:p-12 border border-border shadow-md relative overflow-hidden">
                    {step === 1 && (
-                     <div className="animate-fade-in space-y-16">
-                        <div>
-                          <h1 className="text-4xl md:text-6xl font-black text-foreground font-display italic tracking-tight mb-4 leading-[0.95]">Reserva tu <span className="text-primary">Evolución.</span></h1>
-                          <p className="text-xl text-muted-foreground font-medium italic">Selecciona el bloque estratégico que transformará tu visión digital.</p>
+                     <div className="space-y-12">
+                        <div className="text-center md:text-left">
+                          <h1 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight mb-2 leading-tight">Reserva tu <span className="text-primary">Sesión.</span></h1>
+                          <p className="text-lg text-muted-foreground font-medium">Selecciona el horario que mejor se adapte a tu agenda.</p>
                         </div>
 
-                        <div className="space-y-8">
-                          <Label className="text-xs font-black uppercase tracking-[0.4em] text-primary flex items-center gap-4">
-                             <Calendar className="h-5 w-5" /> Ventanas Disponibles
+                        <div className="space-y-6">
+                          <Label className="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-2">
+                             <Calendar className="h-4 w-4" /> Fechas Disponibles
                           </Label>
-                          <div className="grid grid-cols-2 gap-6">
+                          <div className="grid grid-cols-2 gap-4">
                             {dates.map((date) => (
                               <button
                                 key={date}
                                 onClick={() => setSelectedDate(date)}
                                 className={cn(
-                                  "h-24 rounded-3xl border-2 font-black transition-all flex items-center justify-center text-xl shadow-md",
-                                  selectedDate === date ? "bg-primary text-primary-foreground border-primary shadow-2xl scale-105" : "bg-background/20 border-border/20 hover:border-primary/40 text-muted-foreground/60"
+                                  "h-16 rounded-xl border-2 font-bold transition-all flex items-center justify-center text-lg",
+                                  selectedDate === date ? "bg-primary text-primary-foreground border-primary shadow-lg" : "bg-background border-border hover:border-primary/40 text-muted-foreground"
                                 )}
                               >
                                 {date}
@@ -310,18 +295,18 @@ const BookingPage: React.FC = () => {
                           </div>
                         </div>
 
-                        <div className="space-y-8">
-                           <Label className="text-xs font-black uppercase tracking-[0.4em] text-accent flex items-center gap-4">
-                             <Clock className="h-5 w-5" /> Distribución Horaria
+                        <div className="space-y-6">
+                           <Label className="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-2">
+                             <Clock className="h-4 w-4" /> Horarios
                            </Label>
-                           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                               {times.map((t) => (
                                 <button
                                   key={t}
                                   onClick={() => setSelectedTime(t)}
                                   className={cn(
-                                    "h-20 rounded-2xl border-2 font-black transition-all text-sm uppercase tracking-tighter px-2",
-                                    selectedTime === t ? "bg-accent text-accent-foreground border-accent shadow-xl" : "bg-background/10 border-border/10 hover:border-accent/40 text-muted-foreground/40"
+                                    "h-14 rounded-lg border-2 font-bold transition-all text-xs tracking-widest",
+                                    selectedTime === t ? "bg-primary text-primary-foreground border-primary shadow-md" : "bg-background border-border hover:border-primary/40 text-muted-foreground"
                                   )}
                                 >
                                    {t}
@@ -331,56 +316,55 @@ const BookingPage: React.FC = () => {
                         </div>
 
                         <Button 
-                          className="w-full h-24 rounded-[2.5rem] bg-primary text-primary-foreground font-black uppercase tracking-widest text-sm shadow-[0_20px_50px_-10px_rgba(var(--primary-rgb),0.3)] active:scale-95 transition-all disabled:opacity-20 mt-16" 
+                          className="w-full h-16 rounded-xl bg-primary text-primary-foreground font-bold uppercase tracking-widest text-xs shadow-md transition-all disabled:opacity-20 mt-8" 
                           disabled={!selectedDate || !selectedTime} 
                           onClick={() => setStep(2)}
                         >
-                          Continuar al Pago Seguro
-                          <ArrowRight className="h-5 w-5 ml-4" />
+                          Continuar al Pago
+                          <ArrowRight className="h-4 w-4 ml-3" />
                         </Button>
                      </div>
                    )}
 
                    {step === 2 && (
-                     <div className="animate-fade-in space-y-16">
-                        <div>
-                           <h1 className="text-4xl md:text-6xl font-black text-foreground font-display italic tracking-tight mb-4 leading-[0.95]">Blindaje de <span className="text-accent">Pago.</span></h1>
-                           <p className="text-xl text-muted-foreground font-medium italic">Inversión corporativa bajo los más altos estándares de seguridad.</p>
+                     <div className="space-y-12">
+                        <div className="text-center md:text-left">
+                           <h1 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight mb-2 leading-tight">Detalles de <span className="text-primary">Pago.</span></h1>
+                           <p className="text-lg text-muted-foreground font-medium">Pago seguro y encriptado.</p>
                         </div>
 
-                        <div className="space-y-10">
-                           <div className="grid gap-8">
-                              <div className="space-y-4">
-                                <Label className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/60">Titular de Cuenta</Label>
+                        <div className="space-y-8">
+                           <div className="grid gap-6">
+                              <div className="space-y-2">
+                                <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Nombre en la Tarjeta</Label>
                                 <Input 
-                                  placeholder="NOMBRE COMO APARECE EN TARJETA" 
+                                  placeholder="NOMBRE COMPLETO" 
                                   value={cardName}
                                   onChange={(e) => setCardName(e.target.value.toUpperCase())}
-                                  className="h-20 rounded-2xl bg-background/5 border-2 font-black px-8 uppercase tracking-[0.2em] focus:border-accent text-lg shadow-inner"
+                                  className="h-14 rounded-xl border-2 font-bold px-6 uppercase tracking-wider focus:border-primary text-base shadow-sm"
                                 />
-                                {errors.cardName && <p className="text-xs text-destructive font-black uppercase italic tracking-wider">{errors.cardName}</p>}
+                                {errors.cardName && <p className="text-[10px] text-destructive font-bold uppercase tracking-wider">{errors.cardName}</p>}
                               </div>
 
-                              <div className="space-y-4">
-                                 <Label className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/60">Credenciales de Acceso</Label>
-                                 <div className="relative group">
-                                    <CreditCard className="absolute left-8 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground group-focus-within:text-accent transition-colors" />
+                              <div className="space-y-2">
+                                 <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Número de Tarjeta</Label>
+                                 <div className="relative">
                                     <Input 
                                       placeholder="0000 0000 0000 0000" 
                                       value={formatCardNumber(cardNumber, cardType)}
                                       onChange={(e) => setCardNumber(sanitizeNumber(e.target.value))}
-                                      className="h-24 pl-24 rounded-3xl bg-background/5 border-2 font-black text-3xl tracking-widest focus:border-accent shadow-inner"
+                                      className="h-14 rounded-xl border-2 font-bold text-lg tracking-widest focus:border-primary shadow-sm"
                                     />
                                     {cardType !== 'unknown' && (
-                                       <span className="absolute right-8 top-1/2 -translate-y-1/2 font-black text-[10px] uppercase tracking-widest text-accent bg-accent/10 px-4 py-2 rounded-xl border border-accent/20">{cardType}</span>
+                                       <span className="absolute right-6 top-1/2 -translate-y-1/2 font-bold text-[10px] uppercase tracking-widest text-primary">{cardType}</span>
                                     )}
                                  </div>
-                                 {errors.cardNumber && <p className="text-xs text-destructive font-black uppercase italic tracking-wider">{errors.cardNumber}</p>}
-                              </div>
+                                 {errors.cardNumber && <p className="text-[10px] text-destructive font-bold uppercase tracking-wider">{errors.cardNumber}</p>}
+                               </div>
 
-                              <div className="grid grid-cols-2 gap-8">
-                                 <div className="space-y-4">
-                                    <Label className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/60">Vencimiento</Label>
+                              <div className="grid grid-cols-2 gap-6">
+                                 <div className="space-y-2">
+                                    <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Vencimiento</Label>
                                     <Input 
                                       placeholder="MM/YY" 
                                       value={expiry}
@@ -388,39 +372,32 @@ const BookingPage: React.FC = () => {
                                         const val = sanitizeNumber(e.target.value).slice(0, 4);
                                         setExpiry(val.length > 2 ? `${val.slice(0, 2)}/${val.slice(2)}` : val);
                                       }}
-                                      className="h-20 rounded-2xl bg-background/5 border-2 font-black px-8 focus:border-accent text-center text-xl tracking-widest shadow-inner"
+                                      className="h-14 rounded-xl border-2 font-bold text-center text-lg tracking-widest focus:border-primary shadow-sm"
                                     />
-                                    {errors.expiry && <p className="text-xs text-destructive font-black uppercase italic tracking-wider">{errors.expiry}</p>}
+                                    {errors.expiry && <p className="text-[10px] text-destructive font-bold uppercase tracking-wider">{errors.expiry}</p>}
                                  </div>
-                                 <div className="space-y-4">
-                                    <Label className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/60">CVV</Label>
+                                 <div className="space-y-2">
+                                    <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">CVV</Label>
                                     <Input 
                                       type="password"
                                       placeholder="***" 
-                                      className="h-20 rounded-2xl bg-background/5 border-2 font-black px-8 focus:border-accent text-center text-xl tracking-widest shadow-inner"
+                                      className="h-14 rounded-xl border-2 font-bold text-center text-lg tracking-widest focus:border-primary shadow-sm"
                                       value={cvv}
                                       onChange={(e) => setCvv(sanitizeNumber(e.target.value).slice(0, cardType === 'amex' ? 4 : 3))}
                                     />
-                                    {errors.cvv && <p className="text-xs text-destructive font-black uppercase italic tracking-wider">{errors.cvv}</p>}
+                                    {errors.cvv && <p className="text-[10px] text-destructive font-bold uppercase tracking-wider">{errors.cvv}</p>}
                                  </div>
                               </div>
                            </div>
                         </div>
 
-                        <div className="pt-12 border-t border-border/10 text-center">
-                           <Button 
-                             className="w-full h-24 rounded-[2.5rem] bg-accent text-accent-foreground font-black uppercase tracking-widest text-sm shadow-[0_20px_50px_-10px_rgba(var(--accent-rgb),0.3)] active:scale-95 transition-all mb-6" 
-                             onClick={handlePayment}
-                             disabled={isProcessing}
-                           >
-                             Autorizar Inversión S/ 149.00
-                           </Button>
-                           <p className="text-[10px] text-muted-foreground font-black uppercase tracking-[0.3em] opacity-40 flex items-center justify-center gap-4">
-                              <div className="h-1 w-8 bg-muted-foreground/30 rounded-full" />
-                              Transacción Cifrada 256-bit AES
-                              <div className="h-1 w-8 bg-muted-foreground/30 rounded-full" />
-                           </p>
-                        </div>
+                        <Button 
+                          className="w-full h-16 rounded-xl bg-primary text-primary-foreground font-bold uppercase tracking-widest text-xs shadow-lg hover:bg-primary/90 transition-all mt-6" 
+                          onClick={handlePayment}
+                          disabled={isProcessing}
+                        >
+                          Confirmar Pago S/ 149.00
+                        </Button>
                      </div>
                    )}
                 </div>
