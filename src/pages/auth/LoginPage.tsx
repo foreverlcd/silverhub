@@ -121,11 +121,11 @@ const LoginPage: React.FC = () => {
               </p>
             </div>
 
-            <div className="mt-6 p-4 bg-muted rounded-lg">
-              <p className="text-xs text-muted-foreground text-center">
-                <strong>Demo:</strong> Usa "admin@", "mentora@" o cualquier email para probar diferentes roles.
-              </p>
-            </div>
+            {/*<div className="mt-6 p-4 bg-muted rounded-lg">*/}
+            {/*  <p className="text-xs text-muted-foreground text-center">*/}
+            {/*    <strong>Demo:</strong> Usa "admin@", "mentora@" o cualquier email para probar diferentes roles.*/}
+            {/*  </p>*/}
+            {/*</div>*/}
           </div>
         </div>
       </div>

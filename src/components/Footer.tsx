@@ -44,8 +44,8 @@ export const Footer: React.FC = () => {
           <div className="md:col-span-4 lg:col-span-2">
             <h4 className="text-sm font-bold text-foreground mb-8">Plataforma</h4>
             <ul className="space-y-4 text-sm font-medium text-muted-foreground">
-              <li><Link to="/para-mentees" className="hover:text-primary transition-colors">Para Mentees</Link></li>
-              <li><Link to="/para-mentores" className="hover:text-primary transition-colors">Para Mentores</Link></li>
+              <li><Link to="/para-mentees" className="hover:text-primary transition-colors">Para Seniors</Link></li>
+              <li><Link to="/para-mentores" className="hover:text-primary transition-colors">Para Mentores Jovenes</Link></li>
               <li><Link to="/recursos" className="hover:text-primary transition-colors">Recursos</Link></li>
             </ul>
           </div>

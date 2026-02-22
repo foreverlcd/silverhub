@@ -97,8 +97,8 @@ const LandingPage: React.FC = () => {
               </div>
 
               <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-8 animate-slide-up leading-[1.1]">
-                Tu Sabiduría.<br />
-                <span className="text-primary">Nuestra Tecnología.</span>
+                Experiencia que trasciende.<br />
+                <span className="text-primary">Tecnología que impulsa.</span>
               </h1>
 
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-12 animate-slide-up animation-delay-100 font-medium leading-relaxed">

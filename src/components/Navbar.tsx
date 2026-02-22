@@ -19,7 +19,7 @@ export const Navbar: React.FC = () => {
 
   const navLinks = [
     { href: '/', label: 'Inicio' },
-    { href: '/para-mentees', label: 'Para Mentees Senior' },
+    { href: '/para-mentees', label: 'Para Seniors' },
     { href: '/para-mentores', label: 'Para Mentores Jovenes' },
   ];
 
